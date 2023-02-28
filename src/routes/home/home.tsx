@@ -4,12 +4,9 @@ import clsx from "clsx";
 import { DateContext } from "../../contexts/DateContext";
 
 function Home() {
-  // const navigate = useNavigate();
   const [selectedDate,setSelectedDate] = useState<Date>(new Date());
 
-  // useEffect(() => {
-  //   navigate("/home/overview");
-  // }, []);
+  
 
   return (
     <div className="mt-4 border-black">

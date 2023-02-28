@@ -1,8 +1,15 @@
+import { useContext } from "react";
+import { DateContext } from "../../contexts/DateContext";
+
 function TimeBlocks() {
-    return ( 
+  const {selectedDate} = useContext(DateContext);
+
+  return (
     <div>
-        <h1 className="text-2xl font-semibold">Today</h1>
-    </div> );
+      <h1 className="text-2xl font-semibold">Today</h1>
+      <p>{selectedDate.toDateString()}</p>
+    </div>
+  );
 }
 
 export default TimeBlocks;

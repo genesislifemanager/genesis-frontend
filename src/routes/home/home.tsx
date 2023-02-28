@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import clsx from "clsx";
+import { DateContext } from "../../contexts/DateContext";
 
 function Home() {
   const navigate = useNavigate();
+  const [selectedDate,setSelectedDate] = useState<Date>(new Date());
 
   useEffect(() => {
     navigate("/home/overview");
@@ -52,7 +54,9 @@ function Home() {
           }}
         </NavLink>
       </div>
-      <Outlet />
+      <DateContext.Provider value={{selectedDate,setSelectedDate}}>
+        <Outlet />
+      </DateContext.Provider>
     </div>
   );
 }

@@ -1,14 +1,13 @@
 import { useContext } from "react";
 import { DateContext } from "../../contexts/DateContext";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { Outlet } from "react-router-dom";
 
 function TimeBlocks() {
-  const {selectedDate} = useContext(DateContext);
+  const { selectedDate } = useContext(DateContext);
 
   return (
-    <div>
-      <h1 className="text-2xl font-semibold">Today</h1>
-      <p>{selectedDate.toDateString()}</p>
-    </div>
+    <Outlet/>
   );
 }
 

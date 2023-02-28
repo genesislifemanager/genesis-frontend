@@ -4,17 +4,17 @@ import clsx from "clsx";
 import { DateContext } from "../../contexts/DateContext";
 
 function Home() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [selectedDate,setSelectedDate] = useState<Date>(new Date());
 
-  useEffect(() => {
-    navigate("/home/overview");
-  }, []);
+  // useEffect(() => {
+  //   navigate("/home/overview");
+  // }, []);
 
   return (
     <div className="mt-4 border-black">
       <div className="border border-black rounded-lg grid grid-cols-3 my-2">
-        <NavLink to={"/home/overview"}>
+        <NavLink to={"/overview"}>
           {({ isActive }) => {
             return (
               <span
@@ -27,7 +27,7 @@ function Home() {
             );
           }}
         </NavLink>
-        <NavLink to={"/home/timeblocks"}>
+        <NavLink to={"/timeblocks"}>
           {({ isActive }) => {
             return (
               <span
@@ -40,7 +40,7 @@ function Home() {
             );
           }}
         </NavLink>
-        <NavLink to={"/home/calendar"}>
+        <NavLink to={"/calendar"}>
           {({ isActive }) => {
             return (
               <span

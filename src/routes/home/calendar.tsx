@@ -5,7 +5,7 @@ function Calendar() {
   const {selectedDate,setSelectedDate} = useContext(DateContext);
 
   const handleUpdate = () =>{
-    setSelectedDate(new Date("2023-03-03"));
+    setSelectedDate(new Date("2023-03-04"));
   }
 
   return (

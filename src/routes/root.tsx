@@ -3,12 +3,7 @@ import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 function Root() {
-
-  const navigate = useNavigate();
-
-  useEffect(()=>{
-    navigate("/home/overview");
-  },[]);
+  
 
   return (
     <div className="px-4 py-4 min-h-screen border relative border-black">
@@ -19,7 +14,7 @@ function Root() {
           <span className="block font-semibold text-xl">24th March 2023</span>
         </div>
       </div>
-      <Outlet/>
+      <Outlet />
       <div className="flex justify-center rounded-lg left-4 right-4 bottom-4 absolute py-2 px-4 border border-black">
         <HomeIcon width={24} height={24} />
       </div>

@@ -8,7 +8,7 @@ function Home() {
 
   return (
     <div className="mt-4 border-black">
-      <div className="border border-black rounded-lg grid grid-cols-3 my-2">
+      <div className="border border-black rounded-lg grid grid-cols-3">
         <NavLink to={"/home/overview"}>
           {({ isActive }) => {
             return (

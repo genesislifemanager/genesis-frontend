@@ -7,7 +7,7 @@ function SelectedDay() {
   const { selectedDate } = useContext(DateContext);
 
   return (
-    <div className=" border-black">
+    <div className="mt-4 border-black">
       <h1 className="text-2xl font-semibold">Today</h1>
       <div className="mt-4 px-4">
         <NavLink to={"/home/timeblocks/create"}>
@@ -21,6 +21,7 @@ function SelectedDay() {
             <span className="block">SDGP Implementation</span>
           </div>
         </div>
+
       </div>
     </div>
   );

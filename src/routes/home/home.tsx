@@ -6,12 +6,10 @@ import { DateContext } from "../../contexts/DateContext";
 function Home() {
   const [selectedDate,setSelectedDate] = useState<Date>(new Date());
 
-  
-
   return (
     <div className="mt-4 border-black">
       <div className="border border-black rounded-lg grid grid-cols-3 my-2">
-        <NavLink to={"/overview"}>
+        <NavLink to={"/home/overview"}>
           {({ isActive }) => {
             return (
               <span
@@ -24,7 +22,7 @@ function Home() {
             );
           }}
         </NavLink>
-        <NavLink to={"/timeblocks"}>
+        <NavLink to={"/home/timeblocks"}>
           {({ isActive }) => {
             return (
               <span
@@ -37,7 +35,7 @@ function Home() {
             );
           }}
         </NavLink>
-        <NavLink to={"/calendar"}>
+        <NavLink to={"/home/calendar"}>
           {({ isActive }) => {
             return (
               <span

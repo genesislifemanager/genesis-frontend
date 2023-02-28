@@ -5,6 +5,7 @@ import Home from "./routes/home/home";
 import SignUp from "./routes/signup";
 import Overview from "./routes/home/overview";
 import TimeBlocks from "./routes/home/timeblocks";
+import TimeBlock from "./routes/home/timeblock";
 import CreateTimeBlock from "./routes/home/create-timeblock";
 import Calendar from "./routes/home/calendar";
 import "./index.css";
@@ -16,12 +17,12 @@ const router = createBrowserRouter([
   {
     element: <Root />,
     children: [
-      {
+      {        
         element: <Home />,
         children: [
-          { path: "overview", element: <Overview /> },
+          { path:"home/overview", element: <Overview /> },
           {
-            path: "timeblocks",
+            path: "home/timeblocks",
             element: <TimeBlocks />,
             children: [
               {
@@ -32,9 +33,13 @@ const router = createBrowserRouter([
                 path: "create",
                 element: <CreateTimeBlock />,
               },
+              {
+                path:":timeBlockId",
+                element:<TimeBlock/>
+              }
             ],
           },
-          { path: "calendar", element: <Calendar /> },
+          { path: "home/calendar", element: <Calendar /> },
         ],
       },
     ],

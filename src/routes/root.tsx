@@ -3,8 +3,6 @@ import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 function Root() {
-  
-
   return (
     <div className="px-4 py-4 min-h-screen border relative border-black">
       <div className="border border-black py-4 px-4 rounded-lg">

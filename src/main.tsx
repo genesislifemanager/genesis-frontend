@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         children: [
           { path: "overview", element: <Overview /> },
           { path: "timeblocks", element: <TimeBlocks /> },
-          {path:"calendar",element: <Calendar />}
+          { path: "calendar", element: <Calendar /> },
         ],
       },
     ],

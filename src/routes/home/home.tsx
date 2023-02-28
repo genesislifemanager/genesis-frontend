@@ -11,7 +11,6 @@ function Home() {
 
   return (
     <div className="mt-4 border-black">
-      <h1 className="text-2xl font-semibold text-center">Today</h1>
       <div className="border border-black rounded-lg grid grid-cols-3 my-2">
         <NavLink to={"/home/overview"}>
           {({ isActive }) => {

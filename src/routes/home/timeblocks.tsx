@@ -1,7 +1,7 @@
 function TimeBlocks() {
     return ( 
     <div>
-        <h1 className="text-xl font-semibold">Time Blocks</h1>
+        <h1 className="text-2xl font-semibold">Today</h1>
     </div> );
 }
 

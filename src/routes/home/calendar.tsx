@@ -1,7 +1,7 @@
 function Calendar() {
     return ( 
     <div>
-        <h1>Calendar</h1>
+        <h1 className="text-xl font-semibold">Calendar</h1>
     </div> );
 }
 

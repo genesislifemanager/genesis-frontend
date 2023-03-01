@@ -8,6 +8,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/L
 import { TimePicker } from "@mui/x-date-pickers/TimePicker/TimePicker";
 import { createTimeblock } from "../../api/api";
 import clsx from "clsx";
+import { useMutation, useQueryClient } from "react-query";
 
 const types = [
   { id: 1, label: "Task", value: "task" },
@@ -26,42 +27,57 @@ const projects = [
 
 function CreateTimeBlock() {
   const navigate = useNavigate();
-  const [timeblockName,setTimeblockName] = useState("");
+  const [timeblockName, setTimeblockName] = useState("");
   const [type, setType] = useState(types[0]);
   const [mode, setMode] = useState(modes[0]);
   const [s, setS] = useState<Date | null>(new Date());
-  const [duration,setDuration] = useState({h:'0',m:'0'})
+  const [duration, setDuration] = useState({ h: "0", m: "0" });
   const [project, setProject] = useState(projects[0]);
 
   const [showNameError, setShowNameError] = useState(false);
   const [showDurationError, setShowDurationError] = useState(false);
 
-  const handleDurationChange = (e:ChangeEvent<HTMLInputElement>) =>{
+  const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(duration);
-    
-    setDuration({...duration,[e.target.name]:e.target.value});
-  }
+
+    setDuration({ ...duration, [e.target.name]: e.target.value });
+  };
+
+  const queryClient = useQueryClient();
+  const timeblockMutation = useMutation(createTimeblock, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("timeblocks");
+    },
+  });
 
   const handleConfirm = async () => {
-    if (timeblockName  === "") {
+    if (timeblockName === "") {
       setShowNameError(true);
-      const errtimer = setTimeout(()=>{
+      const errtimer = setTimeout(() => {
         setShowNameError(false);
-      },500);
+      }, 500);
       return;
     }
 
-    if (duration.h  === '0' && duration.m === '0') {
+    if (duration.h === "0" && duration.m === "0") {
       setShowDurationError(true);
-      const errtimer = setTimeout(()=>{
+      const errtimer = setTimeout(() => {
         setShowDurationError(false);
-      },500);
+      }, 500);
       return;
     }
 
-    await createTimeblock(timeblockName,type.value,mode.value,s,duration,null,null);
+    timeblockMutation.mutate({
+      name: timeblockName,
+      type: type.value,
+      mode: mode.value,
+      s,
+      duration,
+      project: null,
+      reminder: null,
+    });
     navigate(-1);
-  } 
+  };
 
   return (
     <div className="mt-4 border-black">
@@ -80,10 +96,21 @@ function CreateTimeBlock() {
           <label htmlFor="name" className="block text-base font-semibold">
             Name
           </label>
-          <input id="name" value={timeblockName} onChange={(e)=>{
-            setTimeblockName(e.target.value);
-          }} className={clsx("border  border-black w-full text-sm rounded px-2 py-1",{"border-red-500":showNameError})} name="name" type="text" />
-          <p className={clsx("text-xs text-red-500",{"block":showNameError,"hidden":!showNameError})}>'Name' can't be empty</p>
+          <input
+            id="name"
+            value={timeblockName}
+            onChange={(e) => {
+              setTimeblockName(e.target.value);
+            }}
+            className={clsx("border  border-black w-full text-sm rounded px-2 py-1", {
+              "border-red-500": showNameError,
+            })}
+            name="name"
+            type="text"
+          />
+          <p className={clsx("text-xs text-red-500", { block: showNameError, hidden: !showNameError })}>
+            'Name' can't be empty
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 border-black">
@@ -188,14 +215,26 @@ function CreateTimeBlock() {
                 className=" w-8 border text-center block border-black text-base px-1 py-1 rounded outline-none"
               />
             </div>
-            <p className={clsx("text-xs text-red-500",{"block":showDurationError,"hidden":!showDurationError})}>Both hours and minutes can't be '0'</p>
-        </div>
+            <p className={clsx("text-xs text-red-500", { block: showDurationError, hidden: !showDurationError })}>
+              Both hours and minutes can't be '0'
+            </p>
+          </div>
         </div>
         <div className="flex gap-x-4 border-black mt-4">
-          <button onClick={()=>{navigate(-1)}} type="button" className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20">
+          <button
+            onClick={() => {
+              navigate(-1);
+            }}
+            type="button"
+            className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20"
+          >
             Cancel
           </button>
-          <button onClick={handleConfirm} type="button" className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20">
+          <button
+            onClick={handleConfirm}
+            type="button"
+            className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20"
+          >
             Confirm
           </button>
         </div>

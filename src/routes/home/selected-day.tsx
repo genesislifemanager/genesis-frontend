@@ -3,6 +3,7 @@ import { DateContext } from "../../contexts/DateContext";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
+
 function SelectedDay() {
   const { selectedDate } = useContext(DateContext);
 

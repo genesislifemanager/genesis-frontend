@@ -38,8 +38,6 @@ function CreateTimeBlock() {
   const [showDurationError, setShowDurationError] = useState(false);
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(duration);
-
     setDuration({ ...duration, [e.target.name]: e.target.value });
   };
 

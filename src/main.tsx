@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom";
+import { createBrowserRouter,redirect, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import Root from "./routes/root";
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
                 element: <CreateTimeBlock />,
               },
               {
-                path: ":timeBlockId",
+                path: ":id",
                 element: <TimeBlock />,
               },
             ],

@@ -100,7 +100,7 @@ function CreateTimeBlock() {
             onChange={(e) => {
               setTimeblockName(e.target.value);
             }}
-            className={clsx("border  border-black w-full text-sm rounded px-2 py-1", {
+            className={clsx("border mt-2 border-black w-full text-sm rounded px-2 py-1", {
               "border-red-500": showNameError,
             })}
             name="name"

@@ -13,6 +13,16 @@ export const getAllTimeblocks = async () => {
   }
 };
 
+export const getTimeblockById = async (id:string | undefined) => {
+  try {
+    const res = await api.get(`/timeblocks/${id}`);
+    
+    return res.data.timeblock;
+  } catch (error) {
+    throw new Error("Unable to connect to the server");
+  }
+}
+
 export const createTimeblock = async (timeblock: any) => {
   console.log(timeblock);
   timeblock.duration.h = parseInt(timeblock.duration.h);
@@ -25,3 +35,4 @@ export const createTimeblock = async (timeblock: any) => {
     throw new Error("Unable to connect to the server");
   }
 };
+

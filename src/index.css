@@ -14,3 +14,16 @@
   margin-top: 8px !important;
   outline: none !important;
 }
+
+.MuiCalendarPicker-root{
+  border: 1px solid black !important;
+  border-radius: 8px !important;
+}
+
+.PrivatePickersSlideTransition-root{
+  min-height: 200px !important;
+}
+
+.css-epd502{
+  margin:0 !important;
+}

@@ -13,6 +13,8 @@ import { useQueryClient, useMutation } from "react-query";
 import { updateTimeblockById, deleteTimeblockById } from "../../api/api";
 import clsx from "clsx";
 import isNumber from "is-number";
+import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const types = [
   { id: 1, label: "Task", value: "task" },
@@ -36,7 +38,7 @@ function TimeBlock() {
   const [timeblockName, setTimeblockName] = useState("");
   const [type, setType] = useState(types[0]);
   const [mode, setMode] = useState(modes[0]);
-  const [s, setS] = useState<Date | null>(new Date());
+  const [s, setS] = useState<dayjs.Dayjs>(dayjs());
   const [duration, setDuration] = useState({ h: "0", m: "0" });
   const [project, setProject] = useState(projects[0]);
 
@@ -94,10 +96,12 @@ function TimeBlock() {
 
   const { isLoading, isError, data, error, isSuccess } = useQuery(["timeblocks", id], () => getTimeblockById(id), {
     onSuccess: (data) => {
+      console.log(data.s);
+      
       setTimeblockName(data.name);
       setType(types[types.findIndex((type) => type.value === data.type)]);
       setMode(modes[modes.findIndex((mode) => mode.value === data.mode)]);
-      setS(new Date(data.s));
+      setS(dayjs(new Date(data.s)));
       setDuration({ h: data.duration.h.toString(), m: data.duration.m.toString() });
     },
   });
@@ -229,12 +233,12 @@ function TimeBlock() {
 
           <div className="relative">
             <label className="block text-base font-semibold">Start Time</label>
-            <LocalizationProvider dateAdapter={AdapterMoment}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <TimePicker
                 ampm={false}
                 value={s}
                 onChange={(newS) => {
-                  setS(newS);
+                  setS(newS as dayjs.Dayjs);
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />

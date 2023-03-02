@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { DateContext } from "../../contexts/DateContext";
+import dayjs from "dayjs";
 
 function Home() {
-  const [selectedDate,setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate,setSelectedDate] = useState(dayjs());
 
   return (
     <div className="mt-4 border-black">

@@ -1,8 +1,9 @@
 import { ChevronLeftIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Listbox } from "@headlessui/react";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker/TimePicker";
@@ -10,6 +11,8 @@ import { createTimeblock } from "../../api/api";
 import clsx from "clsx";
 import { useMutation, useQueryClient } from "react-query";
 import isNumber from "is-number";
+import { DateContext } from "../../contexts/DateContext";
+import dayjs from "dayjs";
 
 const types = [
   { id: 1, label: "Task", value: "task" },
@@ -27,11 +30,13 @@ const projects = [
 ];
 
 function CreateTimeBlock() {
+  const { selectedDate } = useContext(DateContext);
+
   const navigate = useNavigate();
   const [timeblockName, setTimeblockName] = useState("");
   const [type, setType] = useState(types[0]);
   const [mode, setMode] = useState(modes[0]);
-  const [s, setS] = useState<Date | null>(new Date());
+  const [s, setS] = useState<dayjs.Dayjs>(dayjs());
   const [duration, setDuration] = useState({ h: "0", m: "0" });
   const [project, setProject] = useState(projects[0]);
 
@@ -61,7 +66,7 @@ function CreateTimeBlock() {
       return;
     }
 
-    if ((duration.h === "0" && duration.m === "0") || duration.h === "" || duration.m === "" ) {
+    if ((duration.h === "0" && duration.m === "0") || duration.h === "" || duration.m === "") {
       setShowDurationError(true);
       const errtimer = setTimeout(() => {
         setShowDurationError(false);
@@ -186,12 +191,12 @@ function CreateTimeBlock() {
 
           <div className="relative">
             <label className="block text-base font-semibold">Start Time</label>
-            <LocalizationProvider dateAdapter={AdapterMoment}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <TimePicker
                 ampm={false}
                 value={s}
-                onChange={(newS) => {
-                  setS(newS);
+                onChange={(newS) => {                                                    
+                  setS(newS as dayjs.Dayjs)
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />

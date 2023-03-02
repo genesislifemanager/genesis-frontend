@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { ChevronDownIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon, ChevronLeftIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { getTimeblockById } from "../../api/api";
 import { ChangeEvent, useState } from "react";
@@ -9,7 +9,8 @@ import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker/TimePicker";
 import { Listbox } from "@headlessui/react";
-
+import { useQueryClient, useMutation } from "react-query";
+import { updateTimeblockById, deleteTimeblockById } from "../../api/api";
 import clsx from "clsx";
 
 const types = [
@@ -39,12 +40,25 @@ function TimeBlock() {
   const [project, setProject] = useState(projects[0]);
 
   const [showNameError, setShowNameError] = useState(false);
-  const [showDurationError, setShowDurationError] = useState(false);  
+  const [showDurationError, setShowDurationError] = useState(false);
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
     setDuration({ ...duration, [e.target.name]: e.target.value });
   };
-  
+
+  const queryClient = useQueryClient();
+  const timeblockUpdateMutation = useMutation(updateTimeblockById, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("timeblocks");
+    },
+  });
+
+  const timeblockDeleteMutation = useMutation(deleteTimeblockById, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("timeblocks");
+    },
+  });
+
   const handleSave = async () => {
     if (timeblockName === "") {
       setShowNameError(true);
@@ -62,7 +76,16 @@ function TimeBlock() {
       return;
     }
 
-    
+    timeblockUpdateMutation.mutate({
+      id: id,
+      name: timeblockName,
+      type: type.value,
+      mode: mode.value,
+      s,
+      duration,
+      project: null,
+      reminder: null,
+    });
     navigate(-1);
   };
 
@@ -74,12 +97,11 @@ function TimeBlock() {
     },
     {
       onSuccess: (data) => {
-        console.log(data);
         setTimeblockName(data.name);
         setType(types[types.findIndex((type) => type.value === data.type)]);
         setMode(modes[modes.findIndex((mode) => mode.value === data.mode)]);
         setS(new Date(data.s));
-        setDuration({h:data.duration.h.toString(), m:data.duration.m.toString()});
+        setDuration({ h: data.duration.h.toString(), m: data.duration.m.toString() });
       },
     }
   );
@@ -90,22 +112,32 @@ function TimeBlock() {
 
   return (
     <div className="mt-4  border-black">
-      <div className="cursor-pointer flex gap-x-4 items-center">
-        <ChevronLeftIcon
+      <div className="cursor-pointer flex justify-between items-center pr-4">
+        <div className="flex items-center gap-x-4">
+          <ChevronLeftIcon
+            width={16}
+            height={16}
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
+          <h1
+            className="text-xl font-semibold"
+            onClick={async () => {
+              await getTimeblockById(id);
+            }}
+          >
+            {data.name}
+          </h1>
+        </div>
+        <TrashIcon
           width={20}
           height={20}
           onClick={() => {
+            timeblockDeleteMutation.mutate(id);
             navigate(-1);
           }}
         />
-        <h1
-          className="text-xl font-semibold"
-          onClick={async () => {
-            await getTimeblockById(id);
-          }}
-        >
-          {data.name}
-        </h1>
       </div>
 
       <form className="px-4">

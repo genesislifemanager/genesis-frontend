@@ -1,4 +1,4 @@
-import { PlusCircleIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { PlusCircleIcon, ChevronRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { DateContext } from "../../contexts/DateContext";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";

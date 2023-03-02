@@ -13,15 +13,15 @@ export const getAllTimeblocks = async () => {
   }
 };
 
-export const getTimeblockById = async (id:string | undefined) => {
+export const getTimeblockById = async (id: string | undefined) => {
   try {
     const res = await api.get(`/timeblocks/${id}`);
-    
+
     return res.data.timeblock;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }
-}
+};
 
 export const createTimeblock = async (timeblock: any) => {
   console.log(timeblock);
@@ -36,3 +36,22 @@ export const createTimeblock = async (timeblock: any) => {
   }
 };
 
+export const updateTimeblockById = async (timeblock: any) => {
+  console.log(timeblock);
+
+  try {
+    const res = await api.put(`/timeblocks/${timeblock.id}`,timeblock);
+    return res.data.updatedTimeblock;
+  } catch (error) {
+    throw new Error("Unable to connect to the server");
+  }
+};
+
+export const deleteTimeblockById = async (id:string|undefined) => {
+  try {
+    const res = await api.delete(`/timeblocks/${id}`);
+    return res.data.deletedTimeblock;
+  } catch (error) {
+    throw new Error("Unable to connect to the server");
+  }
+};

@@ -89,22 +89,15 @@ function TimeBlock() {
     navigate(-1);
   };
 
-  const { isLoading, isError, data, error, isSuccess } = useQuery(
-    ["timeblocks", id],
-    async () => {
-      const data = await getTimeblockById(id);
-      return data;
+  const { isLoading, isError, data, error, isSuccess } = useQuery(["timeblocks", id], () => getTimeblockById(id), {
+    onSuccess: (data) => {
+      setTimeblockName(data.name);
+      setType(types[types.findIndex((type) => type.value === data.type)]);
+      setMode(modes[modes.findIndex((mode) => mode.value === data.mode)]);
+      setS(new Date(data.s));
+      setDuration({ h: data.duration.h.toString(), m: data.duration.m.toString() });
     },
-    {
-      onSuccess: (data) => {
-        setTimeblockName(data.name);
-        setType(types[types.findIndex((type) => type.value === data.type)]);
-        setMode(modes[modes.findIndex((mode) => mode.value === data.mode)]);
-        setS(new Date(data.s));
-        setDuration({ h: data.duration.h.toString(), m: data.duration.m.toString() });
-      },
-    }
-  );
+  });
 
   if (isLoading) {
     return <div className="mt-4 flex justify-center  border-black">Loading</div>;

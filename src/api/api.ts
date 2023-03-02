@@ -13,6 +13,15 @@ export const getAllTimeblocks = async () => {
   }
 };
 
+export const getTimeBlocksByDate = async (date:Date) =>{
+  try {
+    const res = await api.get(`/timeblocks/date/${JSON.stringify(date)}`);
+    return res.data.timeblocks;
+  } catch (error) {
+    throw new Error("Unable to connect to the server");
+  }
+}
+
 export const getTimeblockById = async (id: string | undefined) => {
   try {
     const res = await api.get(`/timeblocks/${id}`);
@@ -55,3 +64,5 @@ export const deleteTimeblockById = async (id:string|undefined) => {
     throw new Error("Unable to connect to the server");
   }
 };
+
+

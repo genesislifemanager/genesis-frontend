@@ -9,6 +9,7 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker/TimePicker";
 import { createTimeblock } from "../../api/api";
 import clsx from "clsx";
 import { useMutation, useQueryClient } from "react-query";
+import isNumber from "is-number";
 
 const types = [
   { id: 1, label: "Task", value: "task" },
@@ -38,11 +39,13 @@ function CreateTimeBlock() {
   const [showDurationError, setShowDurationError] = useState(false);
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setDuration({ ...duration, [e.target.name]: e.target.value });
+    if (isNumber(e.target.value) || e.target.value === "") {
+      setDuration({ ...duration, [e.target.name]: e.target.value });
+    }
   };
 
   const queryClient = useQueryClient();
-  
+
   const timeblockMutation = useMutation(createTimeblock, {
     onSuccess: () => {
       queryClient.invalidateQueries("timeblocks");
@@ -58,7 +61,7 @@ function CreateTimeBlock() {
       return;
     }
 
-    if (duration.h === "0" && duration.m === "0") {
+    if ((duration.h === "0" && duration.m === "0") || duration.h === "" || duration.m === "" ) {
       setShowDurationError(true);
       const errtimer = setTimeout(() => {
         setShowDurationError(false);
@@ -199,7 +202,7 @@ function CreateTimeBlock() {
             <label className="block text-base font-semibold">Duration</label>
             <div className="mt-2 flex items-center gap-x-2">
               <input
-                type="number"
+                type="text"
                 name="h"
                 value={duration.h}
                 onChange={handleDurationChange}
@@ -207,7 +210,7 @@ function CreateTimeBlock() {
               />
               <span className="">:</span>
               <input
-                type="number"
+                type="text"
                 name="m"
                 value={duration.m}
                 onChange={handleDurationChange}

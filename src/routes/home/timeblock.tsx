@@ -12,6 +12,7 @@ import { Listbox } from "@headlessui/react";
 import { useQueryClient, useMutation } from "react-query";
 import { updateTimeblockById, deleteTimeblockById } from "../../api/api";
 import clsx from "clsx";
+import isNumber from "is-number";
 
 const types = [
   { id: 1, label: "Task", value: "task" },
@@ -43,7 +44,9 @@ function TimeBlock() {
   const [showDurationError, setShowDurationError] = useState(false);
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setDuration({ ...duration, [e.target.name]: e.target.value });
+    if (isNumber(e.target.value) || e.target.value === "") {
+      setDuration({ ...duration, [e.target.name]: e.target.value });
+    }
   };
 
   const queryClient = useQueryClient();
@@ -242,7 +245,7 @@ function TimeBlock() {
             <label className="block text-base font-semibold">Duration</label>
             <div className="mt-2 flex items-center gap-x-2">
               <input
-                type="number"
+                type="text"
                 name="h"
                 value={duration.h}
                 onChange={handleDurationChange}
@@ -250,7 +253,7 @@ function TimeBlock() {
               />
               <span className="">:</span>
               <input
-                type="number"
+                type="text"
                 name="m"
                 value={duration.m}
                 onChange={handleDurationChange}

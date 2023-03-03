@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter,redirect, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import Root from "./routes/root";
 import Home from "./routes/home/home";
+import Organize from "./routes/organize/organize";
 import SignUp from "./routes/signup";
 import Overview from "./routes/home/overview";
 import TimeBlocks from "./routes/home/timeblocks";
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
           { path: "home/calendar", element: <Calendar /> },
         ],
       },
+      {
+        path:"organize/projects",
+        element: <Organize />,
+      }
     ],
   },
   {

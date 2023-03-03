@@ -1,6 +1,6 @@
-import { HomeIcon } from "@heroicons/react/24/outline";
+import { HomeIcon,Bars3Icon,Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 function Root() {
   return (
@@ -13,8 +13,16 @@ function Root() {
         </div>
       </div>
       <Outlet />
-      <div className="flex justify-center rounded-lg left-4 right-4 bottom-4 absolute py-2 px-4 border border-black">
-        <HomeIcon width={24} height={24} />
+      <div className="flex justify-center rounded-lg left-4 gap-x-16 right-4 bottom-4 absolute py-2 px-4 border border-black">
+        <NavLink to={"/organize/projects"}>
+          <Bars3Icon width={24} height={24} />
+        </NavLink>
+        <NavLink to={"/home/overview"}>
+          <HomeIcon width={24} height={24} />
+        </NavLink>
+        <NavLink to={"/settings"}>
+          <Cog6ToothIcon width={24} height={24} />
+        </NavLink>
       </div>
     </div>
   );

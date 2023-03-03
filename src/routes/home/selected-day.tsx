@@ -42,7 +42,7 @@ function SelectedDay() {
     if (date.isTomorrow()) {
       return "Tomorrow";
     }
-    return date.format('Do MMMM YYYY');
+    return date.format('Do ');
   }
 
 

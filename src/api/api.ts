@@ -1,4 +1,5 @@
 import axios from "axios";
+import dayjs from "dayjs";
 
 const api = axios.create({
   baseURL: "http://localhost:5174/api",
@@ -13,7 +14,7 @@ export const getAllTimeblocks = async () => {
   }
 };
 
-export const getTimeBlocksByDate = async (date:Date) =>{
+export const getTimeBlocksByDate = async (date:dayjs.Dayjs) =>{
   try {
     const res = await api.get(`/timeblocks/date/${JSON.stringify(date)}`);
     return res.data.timeblocks;

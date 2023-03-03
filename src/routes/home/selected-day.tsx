@@ -5,6 +5,16 @@ import { NavLink } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getAllTimeblocks, getTimeBlocksByDate } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+import isToday from 'dayjs/plugin/isToday';
+import isYesterday from 'dayjs/plugin/isYesterday';
+import isTomorrow from 'dayjs/plugin/isTomorrow';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+dayjs.extend(isToday);
+dayjs.extend(isYesterday);
+dayjs.extend(isTomorrow);
+dayjs.extend(advancedFormat);
+
 
 function SelectedDay() {
   const { selectedDate } = useContext(DateContext);
@@ -22,7 +32,19 @@ function SelectedDay() {
     return formattedTime;
   };
 
-  
+  const getHeadingForDate = (date:dayjs.Dayjs) =>{
+    if (date.isToday()) {
+      return "Today";
+    }
+    if (date.isYesterday()) {
+      return "Yesterday";
+    }
+    if (date.isTomorrow()) {
+      return "Tomorrow";
+    }
+    return date.format('Do MMMM YYYY');
+  }
+
 
   if (isLoading) {
     return (
@@ -46,7 +68,7 @@ function SelectedDay() {
   return (
     <div className="mt-4 border-black">
       <h1 className="text-2xl font-semibold cursor-pointer" >
-        Today
+        {getHeadingForDate(selectedDate)}
       </h1>
       <div className="mt-4 ">
         <NavLink to={"/home/timeblocks/create"}>

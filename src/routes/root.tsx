@@ -17,7 +17,7 @@ function Root() {
         <NavLink to={"/organize/projects"}>
           <Bars3Icon width={24} height={24} />
         </NavLink>
-        <NavLink to={"/home/overview"}>
+        <NavLink to={"/home/timeblocks"}>
           <HomeIcon width={24} height={24} />
         </NavLink>
         <NavLink to={"/settings"}>

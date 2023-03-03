@@ -1,13 +1,13 @@
-import { NavLink,useNavigate } from "react-router-dom";
-import { PlusCircleIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "react-query";
-import { getAllProjects } from "../../api/api";
+import { NavLink, useNavigate } from "react-router-dom";
+import { getAllVentures } from "../../api/api";
+import { ChevronRightIcon } from "@heroicons/react/24/solid";
 
-
-function Projects() {
+function Ventures() {
   const navigate = useNavigate();
-  const { isLoading, isError, data, error, isSuccess } = useQuery("projects", getAllProjects);
-  
+  const { isLoading, isError, data, error, isSuccess } = useQuery("ventures", getAllVentures);
+
   if (isLoading) {
     return (
       <div className=" border-black mt-4">
@@ -29,25 +29,25 @@ function Projects() {
 
   return (
     <div className=" border-black mt-4">
-      <h1 className="text-2xl font-semibold">Projects</h1>
+      <h1 className="text-2xl font-semibold">Ventures</h1>
       <div className="mt-4">
-        <NavLink to={"/organize/projects/create"}>
+        <NavLink to={"/organize/ventures/create"}>
           <div className="border border-black flex justify-center px-2 py-2 rounded">
             <PlusCircleIcon width={20} height={20} />
           </div>
         </NavLink>
       </div>
       <div className="grid grid-cols-1 gap-y-2 mt-4 border-black">
-        {data.map((project: any) => {
+        {data.map((venture: any) => {
           return (
             <div
               onClick={() => {
-                navigate(`/organize/projects/${project.id}`);
+                navigate(`/organize/ventures/${venture.id}`);
               }}
-              key={project.id}
+              key={venture.id}
               className="border cursor-pointer flex justify-between border-black items-center px-4 py-2 rounded"
             >
-              <span className="block text-base">{project.name}</span>
+              <span className="block text-base">{venture.name}</span>
               <div className="flex items-center">
                 <ChevronRightIcon width={20} height={20} />
               </div>
@@ -59,4 +59,4 @@ function Projects() {
   );
 }
 
-export default Projects;
+export default Ventures;

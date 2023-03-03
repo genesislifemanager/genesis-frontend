@@ -7,6 +7,8 @@ import Root from "./routes/root";
 import Home from "./routes/home/home";
 import Organize from "./routes/organize/organize";
 import Projects from "./routes/organize/projects";
+import Ventures from "./routes/organize/ventures";
+import Venture from "./routes/organize/venture";
 import SignUp from "./routes/signup";
 import Overview from "./routes/home/overview";
 import TimeBlocks from "./routes/home/timeblocks";
@@ -17,6 +19,7 @@ import Calendar from "./routes/home/calendar";
 import Project from "./routes/organize/project";
 import "./index.css";
 import CreateProject from "./routes/organize/create-project";
+import CreateVenture from "./routes/organize/create-venture";
 
 const router = createBrowserRouter([
   {
@@ -62,7 +65,18 @@ const router = createBrowserRouter([
             path:"organize/projects/create",
             element:<CreateProject/>
           },
-          
+          {
+            path:"organize/ventures",
+            element:<Ventures/>,          
+          },
+          {
+            path:"organize/ventures/create",
+            element:<CreateVenture/>,          
+          },
+          {
+            path:":organize/ventures/:id",
+            element:<Venture/>
+          },     
         ]
       }
     ],

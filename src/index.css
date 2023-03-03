@@ -15,7 +15,7 @@
   outline: none !important;
 }
 
-.MuiCalendarPicker-root{
+.calendar .MuiCalendarPicker-root{
   border: 1px solid black !important;
   border-radius: 8px !important;
 }

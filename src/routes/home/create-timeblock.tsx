@@ -36,7 +36,7 @@ function CreateTimeBlock() {
   const [timeblockName, setTimeblockName] = useState("");
   const [type, setType] = useState(types[0]);
   const [mode, setMode] = useState(modes[0]);
-  const [s, setS] = useState<dayjs.Dayjs>(dayjs());
+  const [s, setS] = useState<dayjs.Dayjs>(selectedDate);
   const [duration, setDuration] = useState({ h: "0", m: "0" });
   const [project, setProject] = useState(projects[0]);
 

@@ -101,7 +101,7 @@ function TimeBlock() {
       setTimeblockName(data.name);
       setType(types[types.findIndex((type) => type.value === data.type)]);
       setMode(modes[modes.findIndex((mode) => mode.value === data.mode)]);
-      setS(dayjs(new Date(data.s)));
+      setS(dayjs(data.s));
       setDuration({ h: data.duration.h.toString(), m: data.duration.m.toString() });
     },
   });

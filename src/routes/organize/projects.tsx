@@ -1,9 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 import { PlusCircleIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "react-query";
 import { getAllProjects } from "../../api/api";
 
+
 function Projects() {
+  const navigate = useNavigate();
   const { isLoading, isError, data, error, isSuccess } = useQuery("projects", getAllProjects);
 
   if (isLoading) {
@@ -39,6 +41,9 @@ function Projects() {
         {data.map((project: any) => {
           return (
             <div
+              onClick={() => {
+                navigate(`/organize/projects/${project.id}`);
+              }}
               key={project.id}
               className="border cursor-pointer flex justify-between border-black items-center px-4 py-2 rounded"
             >

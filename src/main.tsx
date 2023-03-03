@@ -62,6 +62,7 @@ const router = createBrowserRouter([
             path:"organize/projects/create",
             element:<CreateProject/>
           },
+          
         ]
       }
     ],

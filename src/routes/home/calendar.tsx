@@ -23,7 +23,7 @@ function Calendar() {
   return (
     <div className="mt-4">
       <h1 className="text-2xl font-semibold">Select Date</h1>
-      <div className="mt-4  border-black">
+      <div className="mt-4 calendar border-black">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <StaticDatePicker
             displayStaticWrapperAs="desktop"

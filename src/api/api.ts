@@ -66,4 +66,29 @@ export const deleteTimeblockById = async (id:string|undefined) => {
   }
 };
 
+export const getAllProjects = async () => {
+  try {
+    const res = await api.get("/projects");
+    return res.data.projects;
+  } catch (error) {
+    throw new Error("Unable to connect to the server");
+  }
+};
 
+export const createProject = async (project:any) => {
+  try {
+    const res = await api.post("/projects",project);
+    return res.data.newProject;
+  } catch (error) {
+    throw new Error("Unable to connect to the server");
+  }
+};
+
+export const getProjectById = async (id: string | undefined) => {
+  try {
+    const res = await api.get(`/projects/${id}`);
+    return res.data.project;
+  } catch (error) {
+    throw new Error("Unable to connect to the server");
+  }
+};

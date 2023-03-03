@@ -1,10 +1,10 @@
 import clsx from "clsx";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 function Organize() {
   return (
-  <div className="mt-4 border-black">
-    <div className="border border-black rounded-lg grid grid-cols-2">
+    <div className="mt-4 border-black">
+      <div className="border border-black rounded-lg grid grid-cols-2">
         <NavLink to={"/organize/projects"}>
           {({ isActive }) => {
             return (
@@ -30,9 +30,11 @@ function Organize() {
               </span>
             );
           }}
-        </NavLink>        
+        </NavLink>
       </div>
-  </div>);
+      <Outlet />
+    </div>
+  );
 }
 
 export default Organize;

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import Root from "./routes/root";
 import Home from "./routes/home/home";
 import Organize from "./routes/organize/organize";
+import Projects from "./routes/organize/projects";
 import SignUp from "./routes/signup";
 import Overview from "./routes/home/overview";
 import TimeBlocks from "./routes/home/timeblocks";
@@ -13,7 +14,9 @@ import SelectedDay from "./routes/home/selected-day";
 import CreateTimeBlock from "./routes/home/create-timeblock";
 import TimeBlock from "./routes/home/timeblock";
 import Calendar from "./routes/home/calendar";
+import Project from "./routes/organize/project";
 import "./index.css";
+import CreateProject from "./routes/organize/create-project";
 
 const router = createBrowserRouter([
   {
@@ -44,9 +47,22 @@ const router = createBrowserRouter([
           { path: "home/calendar", element: <Calendar /> },
         ],
       },
-      {
-        path:"organize/projects",
+      {        
         element: <Organize />,
+        children:[
+          {
+            path:"organize/projects",
+            element:<Projects/>,          
+          },
+          {
+            path:":organize/projects/:id",
+            element:<Project/>
+          },
+          {
+            path:"organize/projects/create",
+            element:<CreateProject/>
+          },
+        ]
       }
     ],
   },

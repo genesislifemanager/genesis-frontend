@@ -99,7 +99,7 @@ function CreateTimeBlock() {
         <h1 className="text-xl font-semibold">Create Time Block</h1>
       </div>
       <form className="px-4">
-        <div className="">
+        <div>
           <label htmlFor="name" className="block text-base font-semibold">
             Name
           </label>

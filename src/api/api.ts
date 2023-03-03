@@ -48,6 +48,8 @@ export const createTimeblock = async (timeblock: any) => {
 
 export const updateTimeblockById = async (timeblock: any) => {
   console.log(timeblock);
+  timeblock.duration.h = parseInt(timeblock.duration.h);
+  timeblock.duration.m = parseInt(timeblock.duration.m);
 
   try {
     const res = await api.put(`/timeblocks/${timeblock.id}`,timeblock);
@@ -76,6 +78,9 @@ export const getAllProjects = async () => {
 };
 
 export const createProject = async (project:any) => {
+  project.duration.h = parseInt(project.duration.h);
+  project.duration.m = parseInt(project.duration.m);
+
   try {
     const res = await api.post("/projects",project);
     return res.data.newProject;
@@ -88,6 +93,28 @@ export const getProjectById = async (id: string | undefined) => {
   try {
     const res = await api.get(`/projects/${id}`);
     return res.data.project;
+  } catch (error) {
+    throw new Error("Unable to connect to the server");
+  }
+};
+
+export const updateProjectById = async (project: any) => {
+  console.log(project);
+  project.duration.h = parseInt(project.duration.h);
+  project.duration.m = parseInt(project.duration.m);
+
+  try {
+    const res = await api.put(`/projects/${project.id}`, project);
+    return res.data.updatedProject;
+  } catch (error) {
+    throw new Error("Unable to connect to the server");
+  }
+};
+
+export const deleteProjectById = async (id:string|undefined) => {
+  try {
+    const res = await api.delete(`/projects/${id}`);
+    return res.data.deletedProject;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }

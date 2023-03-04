@@ -43,7 +43,7 @@ function Venture() {
       return;
     }
 
-    ventureUpdateMutation.mutate({ id:id, name: ventureName,  projects: [] });
+    ventureUpdateMutation.mutate({ id:id, name: ventureName });
     navigate(-1);
   };
 

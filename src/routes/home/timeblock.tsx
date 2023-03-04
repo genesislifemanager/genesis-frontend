@@ -88,7 +88,7 @@ function TimeBlock() {
       mode: mode.value,
       s,
       duration,
-      project: null,
+      projectId: null,
       reminder: null,
     });
     navigate(-1);

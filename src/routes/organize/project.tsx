@@ -69,7 +69,7 @@ function Project() {
       return;
     }
 
-    projectUpdateMutation.mutate({ id:id, name: projectName, status: status.value, due, duration, timeblocks: [] });
+    projectUpdateMutation.mutate({ id:id, name: projectName, status: status.value, due, duration,ventureId:null });
     navigate(-1);
   };
 

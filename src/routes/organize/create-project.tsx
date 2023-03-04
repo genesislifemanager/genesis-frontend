@@ -59,7 +59,7 @@ function CreateProject() {
       return;
     }
 
-    projectMutation.mutate({ name: projectName, status: status.value, due, duration, timeblocks: [] });
+    projectMutation.mutate({ name: projectName, status: status.value, due, duration,ventureId:null });
     navigate(-1);
   };
 

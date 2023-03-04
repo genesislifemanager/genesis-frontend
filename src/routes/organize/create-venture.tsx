@@ -34,7 +34,7 @@ function CreateVenture() {
       }, 500);
       return;
     }
-    ventureMutation.mutate({ name: ventureName, projects: [] });
+    ventureMutation.mutate({ name: ventureName });
     navigate(-1);
   };
 

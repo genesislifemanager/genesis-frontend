@@ -38,6 +38,7 @@ function Projects() {
         </NavLink>
       </div>
       <div className="grid grid-cols-1 gap-y-2 mt-4 border-black">
+        
         {data.map((project: any) => {
           return (
             <div

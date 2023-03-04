@@ -50,35 +50,35 @@ const router = createBrowserRouter([
           { path: "home/calendar", element: <Calendar /> },
         ],
       },
-      {        
+      {
         element: <Organize />,
-        children:[
+        children: [
           {
-            path:"organize/projects",
-            element:<Projects/>,          
+            path: "organize/projects",
+            element: <Projects />,
           },
           {
-            path:":organize/projects/:id",
-            element:<Project/>
+            path: ":organize/projects/:id",
+            element: <Project />,
           },
           {
-            path:"organize/projects/create",
-            element:<CreateProject/>
+            path: "organize/projects/create",
+            element: <CreateProject />,
           },
           {
-            path:"organize/ventures",
-            element:<Ventures/>,          
+            path: "organize/ventures",
+            element: <Ventures />,
           },
           {
-            path:"organize/ventures/create",
-            element:<CreateVenture/>,          
+            path: "organize/ventures/create",
+            element: <CreateVenture />,
           },
           {
-            path:":organize/ventures/:id",
-            element:<Venture/>
-          },     
-        ]
-      }
+            path: ":organize/ventures/:id",
+            element: <Venture />,
+          },
+        ],
+      },
     ],
   },
   {

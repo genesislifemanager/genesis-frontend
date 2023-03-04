@@ -1,13 +1,12 @@
-import { NavLink,useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { PlusCircleIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "react-query";
-import { getAllProjects } from "../../api/api";
-
+import { getAllProjects, getAllVentures } from "../../api/api";
 
 function Projects() {
   const navigate = useNavigate();
-  const { isLoading, isError, data, error, isSuccess } = useQuery("projects", getAllProjects);
-  
+  const { isLoading, isError, data, error, isSuccess } = useQuery("ventures", getAllVentures);
+
   if (isLoading) {
     return (
       <div className=" border-black mt-4">
@@ -37,20 +36,37 @@ function Projects() {
           </div>
         </NavLink>
       </div>
-      <div className="grid grid-cols-1 gap-y-2 mt-4 border-black">
-        
-        {data.map((project: any) => {
+
+      <div>
+        {data.map((venture: any) => {
           return (
-            <div
-              onClick={() => {
-                navigate(`/organize/projects/${project.id}`);
-              }}
-              key={project.id}
-              className="border cursor-pointer flex justify-between border-black items-center px-4 py-2 rounded"
-            >
-              <span className="block text-base">{project.name}</span>
-              <div className="flex items-center">
-                <ChevronRightIcon width={20} height={20} />
+            <div className="mt-4">
+              <div
+                className="flex gap-x-4 items-center cursor-pointer"
+                onClick={() => {
+                  navigate(`/organize/ventures/${venture.id}`);
+                }}
+              >
+                <span className="text-xl block font-semibold">{venture.name}</span>
+                <ChevronRightIcon width={16} height={16} />
+              </div>
+              <div className="mt-4 grid grid-cols-1 gap-y-2">
+                {venture.projects.map((project: any) => {
+                  return (
+                    <div
+                      onClick={() => {
+                        navigate(`/organize/projects/${project.id}`);
+                      }}
+                      key={project.id}
+                      className="border  cursor-pointer flex justify-between border-black items-center px-4 py-2 rounded"
+                    >
+                      <span className="block text-base">{project.name}</span>
+                      <div className="flex items-center">
+                        <ChevronRightIcon width={20} height={20} />
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           );

@@ -20,6 +20,7 @@ import Project from "./routes/organize/project";
 import "./index.css";
 import CreateProject from "./routes/organize/create-project";
 import CreateVenture from "./routes/organize/create-venture";
+import VentureEdit from "./routes/organize/edit-venture";
 
 const router = createBrowserRouter([
   {
@@ -76,7 +77,15 @@ const router = createBrowserRouter([
           {
             path: ":organize/ventures/:id",
             element: <Venture />,
+            children:[
+              {
+                path:"edit",
+                element:<VentureEdit/>
+              },
+              
+            ]
           },
+          
         ],
       },
     ],

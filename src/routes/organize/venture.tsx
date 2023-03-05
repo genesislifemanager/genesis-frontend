@@ -3,8 +3,9 @@ import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { deleteVentureById, getVentureById, updateVentureById } from "../../api/api";
+import { NavLink } from "react-router-dom";
 
 function Venture() {
   const { id } = useParams();
@@ -12,15 +13,7 @@ function Venture() {
 
   const [ventureName, setVentureName] = useState("");
 
-  const [showNameError, setShowNameError] = useState(false);
-
   const queryClient = useQueryClient();
-
-  const ventureUpdateMutation = useMutation(updateVentureById, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("ventures");
-    },
-  });
 
   const ventureDeleteMutation = useMutation(deleteVentureById, {
     onSuccess: () => {
@@ -33,19 +26,6 @@ function Venture() {
       setVentureName(data.name);
     },
   });
-
-  const handleSave = () => {
-    if (ventureName === "") {
-      setShowNameError(true);
-      const errtimer = setTimeout(() => {
-        setShowNameError(false);
-      }, 500);
-      return;
-    }
-
-    ventureUpdateMutation.mutate({ id:id, name: ventureName });
-    navigate(-1);
-  };
 
   if (isLoading) {
     return <div className="mt-4 flex justify-center  border-black">Loading</div>;
@@ -63,7 +43,7 @@ function Venture() {
               navigate(-1);
             }}
           />
-          <h1 className="text-xl font-semibold">{data.name}</h1>
+          <h1 className="text-xl font-semibold">{ventureName}</h1>
         </div>
         <TrashIcon
           width={20}
@@ -75,48 +55,36 @@ function Venture() {
           }}
         />
       </div>
-
-      <form className="px-4">
-        <div>
-          <label htmlFor="name" className="block text-base font-semibold">
-            Name
-          </label>
-          <input
-            id="name"
-            value={ventureName}
-            onChange={(e) => {
-              setVentureName(e.target.value);
-            }}
-            className={clsx("border mt-2 border-black w-full text-sm rounded px-2 py-1", {
-              "border-red-500": showNameError,
-            })}
-            name="name"
-            type="text"
-          />
-          <p className={clsx("text-xs text-red-500", { block: showNameError, hidden: !showNameError })}>
-            'Name' can't be empty
-          </p>
-        </div>
-      </form>
-
-      <div className="flex px-4 gap-x-4 border-black mt-4">
-        <button
-          onClick={() => {
-            navigate(-1);
+      <div className="mt-4 border flex flex-row items-center w-fit border-black rounded ">
+        <NavLink to={`/organize/ventures/${id}/projects`}>
+          {({ isActive }) => {
+            return (
+              <span
+                className={clsx("block w-16 cursor-pointer text-center", {
+                  "border border-black rounded": isActive,
+                })}
+              >
+                Projects
+              </span>
+            );
           }}
-          type="button"
-          className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={handleSave}
-          type="button"
-          className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20"
-        >
-          Save
-        </button>
+        </NavLink>
+        <NavLink to={`/organize/ventures/${id}/edit`}>
+          {({ isActive }) => {
+            return (
+              <span
+                className={clsx("block w-16 cursor-pointer text-center", {
+                  "border border-black rounded": isActive,
+                })}
+              >
+                Edit
+              </span>
+            );
+          }}
+        </NavLink>
       </div>
+
+      <Outlet />
     </div>
   );
 }

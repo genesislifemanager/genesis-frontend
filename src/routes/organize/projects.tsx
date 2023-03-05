@@ -44,7 +44,7 @@ function Projects() {
               <div
                 className="flex gap-x-4 items-center cursor-pointer"
                 onClick={() => {
-                  navigate(`/organize/ventures/${venture.id}`);
+                  navigate(`/organize/ventures/${venture.id}/projects`);
                 }}
               >
                 <span className="text-xl block font-semibold">{venture.name}</span>

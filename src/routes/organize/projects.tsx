@@ -40,7 +40,7 @@ function Projects() {
       <div>
         {data.map((venture: any) => {
           return (
-            <div className="mt-4">
+            <div key={venture.id} className="mt-4">
               <div
                 className="flex gap-x-4 items-center cursor-pointer"
                 onClick={() => {

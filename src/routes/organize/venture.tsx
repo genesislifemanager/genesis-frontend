@@ -40,7 +40,7 @@ function Venture() {
             height={16}
             className="cursor-pointer"
             onClick={() => {
-              navigate(-1);
+              navigate("/organize/ventures");
             }}
           />
           <h1 className="text-xl font-semibold">{ventureName}</h1>
@@ -60,7 +60,7 @@ function Venture() {
           {({ isActive }) => {
             return (
               <span
-                className={clsx("block w-16 cursor-pointer text-center", {
+                className={clsx("block w-16 px-1 py-0.5 cursor-pointer text-center", {
                   "border border-black rounded": isActive,
                 })}
               >
@@ -73,7 +73,7 @@ function Venture() {
           {({ isActive }) => {
             return (
               <span
-                className={clsx("block w-16 cursor-pointer text-center", {
+                className={clsx("block w-16 px-1 py-0.5 cursor-pointer text-center", {
                   "border border-black rounded": isActive,
                 })}
               >
@@ -83,7 +83,6 @@ function Venture() {
           }}
         </NavLink>
       </div>
-
       <Outlet />
     </div>
   );

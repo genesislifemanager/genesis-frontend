@@ -34,12 +34,14 @@ const projects = [
 function TimeBlock() {
   const { id } = useParams();
   const navigate = useNavigate();
+  // const [projects,setProjects] = useState([]);
 
   const [timeblockName, setTimeblockName] = useState("");
   const [type, setType] = useState(types[0]);
   const [mode, setMode] = useState(modes[0]);
   const [s, setS] = useState<dayjs.Dayjs>(dayjs());
   const [duration, setDuration] = useState({ h: "0", m: "0" });
+
   const [project, setProject] = useState(projects[0]);
 
   const [showNameError, setShowNameError] = useState(false);
@@ -95,9 +97,7 @@ function TimeBlock() {
   };
 
   const { isLoading, isError, data, error, isSuccess } = useQuery(["timeblocks", id], () => getTimeblockById(id), {
-    onSuccess: (data) => {
-      console.log(data.s);
-      
+    onSuccess: (data) => {      
       setTimeblockName(data.name);
       setType(types[types.findIndex((type) => type.value === data.type)]);
       setMode(modes[modes.findIndex((mode) => mode.value === data.mode)]);
@@ -111,7 +111,7 @@ function TimeBlock() {
   }
 
   return (
-    <div className="mt-4  border-black">
+    <div className="mt-4 border-black">
       <div className="cursor-pointer flex justify-between items-center pr-4">
         <div className="flex items-center gap-x-4">
           <ChevronLeftIcon

@@ -21,6 +21,7 @@ import "./index.css";
 import CreateProject from "./routes/organize/create-project";
 import CreateVenture from "./routes/organize/create-venture";
 import VentureEdit from "./routes/organize/edit-venture";
+import VentureProjects from "./routes/organize/venture-projects";
 
 const router = createBrowserRouter([
   {
@@ -82,7 +83,10 @@ const router = createBrowserRouter([
                 path:"edit",
                 element:<VentureEdit/>
               },
-              
+              {
+                path:"projects",
+                element:<VentureProjects />
+              }
             ]
           },
           

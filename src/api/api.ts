@@ -14,9 +14,18 @@ export const getAllTimeblocks = async () => {
   }
 };
 
-export const getTimeBlocksByDate = async (date:dayjs.Dayjs) =>{
+export const getOpenTimeBlocksByDate = async (date:dayjs.Dayjs) =>{
   try {
-    const res = await api.get(`/timeblocks/date/${JSON.stringify(date)}`);
+    const res = await api.get(`/timeblocks/date/${JSON.stringify(date)}?status=open`);
+    return res.data.timeblocks;
+  } catch (error) {
+    throw new Error("Unable to connect to the server");
+  }
+}
+
+export const getClosedTimeBlocksByDate = async (date:dayjs.Dayjs) =>{
+  try {
+    const res = await api.get(`/timeblocks/date/${JSON.stringify(date)}?status=closed`);
     return res.data.timeblocks;
   } catch (error) {
     throw new Error("Unable to connect to the server");

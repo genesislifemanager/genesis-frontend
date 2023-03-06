@@ -27,3 +27,7 @@
 .css-epd502{
   margin:0 !important;
 }
+
+.MuiPaper-root{
+  border-radius: 8px;
+}

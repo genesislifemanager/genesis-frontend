@@ -9,8 +9,8 @@ function Home() {
 
   return (
     <div className="mt-4 border-black">
-      <div className="border border-black rounded-lg grid grid-cols-3">
-        <NavLink to={"/home/overview"}>
+      <div className="border border-black rounded-lg grid grid-cols-2">
+        {/* <NavLink to={"/home/overview"}>
           {({ isActive }) => {
             return (
               <span
@@ -22,7 +22,7 @@ function Home() {
               </span>
             );
           }}
-        </NavLink>
+        </NavLink> */}
         <NavLink to={"/home/timeblocks"}>
           {({ isActive }) => {
             return (

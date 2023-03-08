@@ -7,9 +7,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker/TimePicker";
-import { createTimeblock } from "../../api/api";
+import { createTimeblock, getAllProjects } from "../../api/api";
 import clsx from "clsx";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import isNumber from "is-number";
 import { DateContext } from "../../contexts/DateContext";
 import dayjs from "dayjs";
@@ -38,10 +38,36 @@ function CreateTimeBlock() {
   const [mode, setMode] = useState(modes[0]);
   const [s, setS] = useState<dayjs.Dayjs>(selectedDate);
   const [duration, setDuration] = useState({ h: "0", m: "0" });
-  const [project, setProject] = useState(projects[0]);
+
+  const [project, setProject] = useState({
+    id: -1,
+    name: "None",
+    duration: null,
+    ventureId: null,
+    due: null,
+    status: null,
+    label: "None",
+    value: "none",
+  });
 
   const [showNameError, setShowNameError] = useState(false);
   const [showDurationError, setShowDurationError] = useState(false);
+
+  const {
+    isLoading,
+    isError,
+    data: projects,
+    error,
+    isSuccess,
+  } = useQuery(
+    "projects",
+    async () => {
+      const data = await getAllProjects();
+      return data.map((project: any) => {
+        return { ...project, label: project.name, value: project.name.toLowerCase() };
+      });
+    },
+  );
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (isNumber(e.target.value) || e.target.value === "") {
@@ -80,11 +106,32 @@ function CreateTimeBlock() {
       mode: mode.value,
       s,
       duration,
-      projectId: null,
+      projectId: project.id,
       reminder: null,
     });
     navigate(-1);
   };
+
+  if (isLoading) {
+    return (
+      <div className="mt-4 border-black">
+        <div className="cursor-pointer flex gap-x-4 items-center">
+          <ChevronLeftIcon
+            width={20}
+            height={20}
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
+          <h1 className="text-xl font-semibold">Create Time Block</h1>
+        </div>
+
+        <div>
+          <h1>Loading...</h1>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-4 border-black">
@@ -98,6 +145,7 @@ function CreateTimeBlock() {
         />
         <h1 className="text-xl font-semibold">Create Time Block</h1>
       </div>
+
       <form className="px-4">
         <div>
           <label htmlFor="name" className="block text-base font-semibold">
@@ -180,7 +228,7 @@ function CreateTimeBlock() {
                 <ChevronDownIcon width={20} height={20} />
               </Listbox.Button>
               <Listbox.Options className={"border bg-slate-200 z-10 absolute left-0 right-0 mt-1 rounded border-black"}>
-                {projects.map((project) => (
+                {projects.map((project: any) => (
                   <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={project.id} value={project}>
                     {project.label}
                   </Listbox.Option>
@@ -195,8 +243,8 @@ function CreateTimeBlock() {
               <TimePicker
                 ampm={false}
                 value={s}
-                onChange={(newS) => {                                                    
-                  setS(newS as dayjs.Dayjs)
+                onChange={(newS) => {
+                  setS(newS as dayjs.Dayjs);
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />

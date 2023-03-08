@@ -5,7 +5,7 @@ import { getAllProjects, getAllVentures } from "../../api/api";
 
 function Projects() {
   const navigate = useNavigate();
-  const { isLoading, isError, data, error, isSuccess } = useQuery("ventures", getAllVentures);
+  const { isLoading, isError, data:ventures, error, isSuccess } = useQuery("ventures", getAllVentures);
 
   if (isLoading) {
     return (
@@ -37,8 +37,9 @@ function Projects() {
         </NavLink>
       </div>
 
+      
       <div>
-        {data.map((venture: any) => {
+        {ventures.map((venture: any) => {
           return (
             <div key={venture.id} className="mt-4">
               <div

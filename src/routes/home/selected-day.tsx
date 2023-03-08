@@ -88,20 +88,34 @@ function SelectedDay() {
 
         <div>
           <h1 className="text-lg mt-4 font-medium">Open</h1>
-          <div className="grid grid-cols-1 gap-y-2 mt-2 border-black">
-            {openTimeblocks.map((timeblock: any) => {
-              return <TimeBlockCard key={timeblock.id} timeblock={timeblock} getFormattedTime={getFormattedTime} />;
-            })}
-          </div>
+          <TimeblockCards timeblocks={openTimeblocks} getFormattedTime={getFormattedTime} />
 
           <h1 className="text-lg mt-4 font-medium">Closed</h1>
-          <div className="grid grid-cols-1 gap-y-2 mt-2 border-black">
-            {closedTimeblocks.map((timeblock: any) => {
-              return <TimeBlockCard key={timeblock.id}  timeblock={timeblock} getFormattedTime={getFormattedTime} />;
-            })}
-          </div>
+          <TimeblockCards timeblocks={closedTimeblocks} getFormattedTime={getFormattedTime} />
         </div>
       </div>
+    </div>
+  );
+}
+
+function TimeblockCards({
+  timeblocks,
+  getFormattedTime,
+}: {
+  timeblocks: any;
+  getFormattedTime: (dateTime: string) => string;
+}) {
+  
+  if (timeblocks.length === 0) {
+    return (<div className="grid grid-cols-1 gap-y-2 mt-2 border-black">
+      <h1>No timeblocks to view</h1>
+    </div>);
+  }
+  return (
+    <div className="grid grid-cols-1 gap-y-2 mt-2 border-black">
+      {timeblocks.map((timeblock: any) => {
+        return <TimeBlockCard key={timeblock.id} timeblock={timeblock} getFormattedTime={getFormattedTime} />;
+      })}
     </div>
   );
 }

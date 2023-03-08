@@ -9,8 +9,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import TextField from "@mui/material/TextField/TextField";
 import dayjs from "dayjs";
 import isNumber from "is-number";
-import { useMutation, useQueryClient } from "react-query";
-import { createProject } from "../../api/api";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { createProject, getAllVentures } from "../../api/api";
 
 const statuses = [
   { id: 1, label: "Open", value: "open" },
@@ -24,9 +24,24 @@ function CreateProject() {
   const [status, setStatus] = useState(statuses[0]);
   const [due, setDue] = useState<dayjs.Dayjs>(dayjs());
   const [duration, setDuration] = useState({ h: "0", m: "0" });
-  
+
+  const [venture, setVenture] = useState({ id: -1, name: "General", label: "General", value: "general" });
+
   const [showNameError, setShowNameError] = useState(false);
   const [showDurationError, setShowDurationError] = useState(false);
+
+  const {
+    isLoading,
+    isError,
+    data: ventures,
+    error,
+    isSuccess,
+  } = useQuery("ventures", async () => {
+    const ventures = await getAllVentures();
+    return ventures.map((venture: any) => {
+      return { ...venture, label: venture.name, value: venture.name.toLowerCase() };
+    });
+  });
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (isNumber(e.target.value) || e.target.value === "") {
@@ -37,8 +52,8 @@ function CreateProject() {
   const queryClient = useQueryClient();
 
   const projectMutation = useMutation(createProject, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("projects");
+    onSuccess: () => {      
+      queryClient.invalidateQueries("ventures");
     },
   });
 
@@ -58,10 +73,31 @@ function CreateProject() {
       }, 500);
       return;
     }
-
-    projectMutation.mutate({ name: projectName, status: status.value, due, duration,ventureId:null });
+    
+    projectMutation.mutate({ name: projectName, status: status.value, due, duration, ventureId: venture.id });
     navigate(-1);
   };
+
+  if (isLoading) {
+    return (
+      <div className="mt-4 border-black">
+        <div className="cursor-pointer flex gap-x-4 items-center">
+          <ChevronLeftIcon
+            width={20}
+            height={20}
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
+          <h1 className="text-xl font-semibold">Create Project</h1>
+        </div>
+
+        <div>
+          <h1>Loading...</h1>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-4 border-black">
@@ -127,9 +163,33 @@ function CreateProject() {
               <Listbox.Options
                 className={"border bg-slate-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
               >
-                {statuses.map((type) => (
-                  <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={type.id} value={type}>
-                    {type.label}
+                {statuses.map((status) => (
+                  <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={status.id} value={status}>
+                    {status.label}
+                  </Listbox.Option>
+                ))}
+              </Listbox.Options>
+            </Listbox>
+          </div>
+
+          <div className="relative ">
+            <label className="block text-base font-semibold">Venture</label>
+            <Listbox value={venture} onChange={setVenture}>
+              <Listbox.Button
+                as="div"
+                className={
+                  "border mt-2 cursor-pointer text-sm px-1 py-1 rounded flex items-center justify-between border-black"
+                }
+              >
+                <span className="block">{venture.label}</span>
+                <ChevronDownIcon width={20} height={20} />
+              </Listbox.Button>
+              <Listbox.Options
+                className={"border bg-slate-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
+              >
+                {ventures.map((venture:any) => (
+                  <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={venture.id} value={venture}>
+                    {venture.label}
                   </Listbox.Option>
                 ))}
               </Listbox.Options>

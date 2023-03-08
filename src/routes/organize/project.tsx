@@ -3,7 +3,7 @@ import { ChevronDownIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
 import dayjs from "dayjs";
 import { ChangeEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProjectById, updateProjectById,deleteProjectById } from "../../api/api";
+import { getProjectById, updateProjectById,deleteProjectById, getAllVentures } from "../../api/api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import clsx from "clsx";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
@@ -28,8 +28,21 @@ function Project() {
   const [due, setDue] = useState<dayjs.Dayjs>(dayjs());
   const [duration, setDuration] = useState({ h: "0", m: "0" });
 
+  const [venture, setVenture] = useState({ id: -1, name: "General", label: "General", value: "general" });
+
+
   const [showNameError, setShowNameError] = useState(false);
   const [showDurationError, setShowDurationError] = useState(false);
+
+  const {
+    isLoading:isVenturesLoading,
+    data: ventures,
+  } = useQuery("ventures", async () => {
+    const ventures = await getAllVentures();
+    return ventures.map((venture: any) => {
+      return { ...venture, label: venture.name, value: venture.name.toLowerCase() };
+    });
+  });
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (isNumber(e.target.value) || e.target.value === "") {
@@ -41,13 +54,13 @@ function Project() {
 
   const projectUpdateMutation = useMutation(updateProjectById, {
     onSuccess: () => {
-      queryClient.invalidateQueries("projects");
+      queryClient.invalidateQueries("ventures");
     },
   });
 
   const projectDeleteMutation = useMutation(deleteProjectById, {
     onSuccess: () => {
-      queryClient.invalidateQueries("projects");
+      queryClient.invalidateQueries("ventures");
     },
   });
 
@@ -69,20 +82,23 @@ function Project() {
       return;
     }
 
-    projectUpdateMutation.mutate({ id:id, name: projectName, status: status.value, due, duration,ventureId:null });
+    projectUpdateMutation.mutate({ id:id, name: projectName, status: status.value, due, duration,ventureId:venture.id });
     navigate(-1);
   };
 
-  const { isLoading, isError, data, error, isSuccess } = useQuery(["projects", id], () => getProjectById(id), {
+  const { isLoading:isProjectLoading, isError, data, error, isSuccess } = useQuery(["projects", id], () => getProjectById(id), {
     onSuccess: (data) => {
       setProjectName(data.name);
       setStatus(statuses[statuses.findIndex((status) => status.value === data.status)]);
       setDue(dayjs(data.s));
       setDuration({ h: data.duration.h.toString(), m: data.duration.m.toString() });
+      setVenture(ventures.find((venture:any) => {
+        return venture.id === data.ventureId;
+      }))
     },
   });
 
-  if (isLoading) {
+  if (isProjectLoading || isVenturesLoading) {
     return <div className="mt-4 flex justify-center  border-black">Loading</div>;
   }
 
@@ -163,9 +179,33 @@ function Project() {
               <Listbox.Options
                 className={"border bg-slate-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
               >
-                {statuses.map((type) => (
-                  <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={type.id} value={type}>
-                    {type.label}
+                {statuses.map((status) => (
+                  <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={status.id} value={status}>
+                    {status.label}
+                  </Listbox.Option>
+                ))}
+              </Listbox.Options>
+            </Listbox>
+          </div>
+
+          <div className="relative ">
+            <label className="block text-base font-semibold">Venture</label>
+            <Listbox value={venture} onChange={setVenture}>
+              <Listbox.Button
+                as="div"
+                className={
+                  "border mt-2 cursor-pointer text-sm px-1 py-1 rounded flex items-center justify-between border-black"
+                }
+              >
+                <span className="block">{venture.label}</span>
+                <ChevronDownIcon width={20} height={20} />
+              </Listbox.Button>
+              <Listbox.Options
+                className={"border bg-slate-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
+              >
+                {ventures.map((venture:any) => (
+                  <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={venture.id} value={venture}>
+                    {venture.label}
                   </Listbox.Option>
                 ))}
               </Listbox.Options>

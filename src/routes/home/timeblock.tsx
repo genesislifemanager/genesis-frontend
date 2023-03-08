@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { ChevronDownIcon, ChevronLeftIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import { getTimeblockById } from "../../api/api";
+import { getAllProjects, getTimeblockById } from "../../api/api";
 import { ChangeEvent, useState } from "react";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import TextField from "@mui/material/TextField";
@@ -42,10 +42,32 @@ function TimeBlock() {
   const [s, setS] = useState<dayjs.Dayjs>(dayjs());
   const [duration, setDuration] = useState({ h: "0", m: "0" });
 
-  const [project, setProject] = useState(projects[0]);
+  const [project, setProject] = useState({
+    id: -1,
+    name: "None",
+    duration: null,
+    ventureId: null,
+    due: null,
+    status: null,
+    label: "None",
+    value: "none",
+  });
 
   const [showNameError, setShowNameError] = useState(false);
   const [showDurationError, setShowDurationError] = useState(false);
+
+  const {
+    isLoading:isProjectsLoading,
+    data: projects,
+  } = useQuery(
+    "projects",
+    async () => {
+      const data = await getAllProjects();
+      return data.map((project: any) => {
+        return { ...project, label: project.name, value: project.name.toLowerCase() };
+      });
+    },
+  );
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (isNumber(e.target.value) || e.target.value === "") {
@@ -90,23 +112,26 @@ function TimeBlock() {
       mode: mode.value,
       s,
       duration,
-      projectId: null,
+      projectId: project.id,
       reminder: null,
     });
     navigate(-1);
   };
 
-  const { isLoading, isError, data, error, isSuccess } = useQuery(["timeblocks", id], () => getTimeblockById(id), {
+  const { isLoading:isTimeblockLoading, isError, data, error, isSuccess } = useQuery(["timeblocks", id], () => getTimeblockById(id), {
     onSuccess: (data) => {      
       setTimeblockName(data.name);
       setType(types[types.findIndex((type) => type.value === data.type)]);
       setMode(modes[modes.findIndex((mode) => mode.value === data.mode)]);
       setS(dayjs(data.s));
       setDuration({ h: data.duration.h.toString(), m: data.duration.m.toString() });
+      setProject(projects.find((project:any) => {
+        return project.id === data.projectId;
+      }))
     },
   });
 
-  if (isLoading) {
+  if (isTimeblockLoading || isProjectsLoading) {
     return <div className="mt-4 flex justify-center  border-black">Loading</div>;
   }
 
@@ -222,7 +247,7 @@ function TimeBlock() {
                 <ChevronDownIcon width={20} height={20} />
               </Listbox.Button>
               <Listbox.Options className={"border bg-slate-200 z-10 absolute left-0 right-0 mt-1 rounded border-black"}>
-                {projects.map((project) => (
+                {projects.map((project:any) => (
                   <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={project.id} value={project}>
                     {project.label}
                   </Listbox.Option>

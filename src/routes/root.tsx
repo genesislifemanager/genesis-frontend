@@ -10,13 +10,19 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useQuery } from "react-query";
+import { getCurrentUser, signOutUser } from "../firebase/auth";
 
 function Root() {
   const [open, setOpen] = useState(false);
   const [prompt, setPrompt] = useState("");
+  const navigate = useNavigate();
 
-  const handleClickOpen = () => {
+
+  const handleClickOpen = async () => { 
     setOpen(true);
+    await signOutUser();
+    navigate(0);
   };
 
   const handleClose = () => {
@@ -26,6 +32,23 @@ function Root() {
   const handleSubmit = () => {
     setOpen(false);
   };
+
+  
+  const { isLoading, data: user } = useQuery("user", getCurrentUser, {
+    onSuccess(user) {
+      if (!user) {
+        navigate("/auth/signin");
+      }
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <div className=" px-4 py-4 min-h-screen items-center flex justify-center border relative border-black">
+        <h1 className="text-2xl">Loading...</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="px-4 py-4 min-h-screen border relative border-black">
@@ -54,7 +77,7 @@ function Root() {
         <DialogContent>
           <DialogContentText>Just tell Genesis what you want to do...</DialogContentText>
           <TextField
-            fullWidth          
+            fullWidth
             value={prompt}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setPrompt(event.target.value);

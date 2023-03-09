@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
+import { useQuery } from "react-query";
+import { getCurrentUser } from "../firebase/auth";
 dayjs.extend(advancedFormat);
 
 function Header() {
   const [time, setTime] = useState(dayjs());
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -13,6 +16,8 @@ function Header() {
 
     return () => clearInterval(timer);
   }, []);
+
+  
 
   return (
     <div className="border border-black py-4 px-4 rounded-lg">

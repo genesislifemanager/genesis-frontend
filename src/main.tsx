@@ -22,6 +22,7 @@ import CreateProject from "./routes/organize/create-project";
 import CreateVenture from "./routes/organize/create-venture";
 import VentureEdit from "./routes/organize/edit-venture";
 import VentureProjects from "./routes/organize/venture-projects";
+import SignIn from "./routes/signin";
 
 const router = createBrowserRouter([
   {
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
   {
     path: "/auth/signup",
     element: <SignUp />,
+  },
+  {
+    path: "/auth/signin",
+    element: <SignIn />,
   },
 ]);
 

@@ -27,7 +27,7 @@ function SelectedDay() {
 
   const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
 
-  const { isLoading: isOpenTimeblocksLoading, data: openTimeblocks } = useQuery(
+  const { isIdle:isOpenTimeblocksIdle , isLoading: isOpenTimeblocksLoading, data: openTimeblocks } = useQuery(
     ["timeblocks", selectedDate, { status: "open" }],
     () => getOpenTimeBlocksByDate(user!.uid, selectedDate),
     {
@@ -35,7 +35,7 @@ function SelectedDay() {
     }
   );
 
-  const { isLoading: isClosedTimeblocksLoading, data: closedTimeblocks } = useQuery(
+  const { isIdle:isClosedTimeblocksIdle, isLoading: isClosedTimeblocksLoading, data: closedTimeblocks } = useQuery(
     ["timeblocks", selectedDate, { status: "closed" }],
     () => getClosedTimeBlocksByDate(user!.uid,selectedDate),
     {
@@ -46,12 +46,7 @@ function SelectedDay() {
   const navigate = useNavigate();
 
   const getFormattedTime = (dateTime: string) => {
-    const formattedTime = new Date(dateTime).toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
-    return formattedTime;
+    return dayjs(dateTime).format("HH:mm");
   };
 
   const getHeadingForDate = (date: dayjs.Dayjs) => {
@@ -67,7 +62,7 @@ function SelectedDay() {
     return date.format("Do MMMM YYYY");
   };
 
-  if (isClosedTimeblocksLoading || isOpenTimeblocksLoading) {
+  if (isUserLoading ||  isOpenTimeblocksIdle || isClosedTimeblocksIdle ||   isClosedTimeblocksLoading || isOpenTimeblocksLoading) {
     return (
       <div className="mt-4 border-black">
         <h1 className="text-2xl font-semibold">Today</h1>
@@ -115,6 +110,7 @@ function TimeblockCards({
   timeblocks: any;
   getFormattedTime: (dateTime: string) => string;
 }) {
+
   if (timeblocks.length === 0) {
     return (
       <div className="grid grid-cols-1 gap-y-2 mt-2 border-black">

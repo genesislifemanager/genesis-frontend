@@ -21,7 +21,7 @@ function SignUp() {
       return;
     }
     if (formData.password !== formData.confirmPassword) return;
-    await signUpUser(formData.email, formData.password);
+    await signUpUser(formData.email, formData.password, formData);
     
     navigate("/home/timeblocks");
   };

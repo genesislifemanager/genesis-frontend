@@ -133,9 +133,7 @@ function TimeBlock() {
       setType(types[types.findIndex((type) => type.value === data.type)]);
       setMode(modes[modes.findIndex((mode) => mode.value === data.mode)]);
       setS(dayjs(data.s));
-      setDuration({ h: data.duration.h.toString(), m: data.duration.m.toString() });
-      console.log(projects);
-      console.log(data);
+      setDuration({ h: data.duration.h.toString(), m: data.duration.m.toString() });      
       setProject(
         projects.find((project: any) => {
           return project.id === data.projectId;

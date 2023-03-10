@@ -65,11 +65,14 @@ function CreateTimeBlock() {
   } = useQuery(
     "projects",
     async () => {
-      const data = await getAllProjects();
+      const data = await getAllProjects(user!.uid);
       return data.map((project: any) => {
         return { ...project, label: project.name, value: project.name.toLowerCase() };
       });
     },
+    {
+      enabled:!!user
+    }
   );
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -38,6 +38,7 @@ function Project() {
   const [showDurationError, setShowDurationError] = useState(false);
 
   const {
+    isIdle:isVenturesIdle,
     isLoading:isVenturesLoading,
     data: ventures,
   } = useQuery("ventures", async () => {
@@ -91,19 +92,22 @@ function Project() {
     navigate(-1);
   };
 
-  const { isLoading:isProjectLoading, isError, data, error, isSuccess } = useQuery(["projects", id], () => getProjectById(user!.uid,id), {
+  const { isIdle:isProjectsIdle, isLoading:isProjectLoading, isError, data, error, isSuccess } = useQuery(["projects", id], () => getProjectById(user!.uid,id), {
     onSuccess: (data) => {
+      console.log(data);
+      
       setProjectName(data.name);
       setStatus(statuses[statuses.findIndex((status) => status.value === data.status)]);
-      setDue(dayjs(data.s));
+      setDue(dayjs(data.due));
       setDuration({ h: data.duration.h.toString(), m: data.duration.m.toString() });
       setVenture(ventures.find((venture:any) => {
         return venture.id === data.ventureId;
       }))
     },
+    enabled:!!user
   });
 
-  if (isUserLoading || isProjectLoading || isVenturesLoading) {
+  if (isUserLoading ||  isProjectsIdle || isVenturesIdle || isProjectLoading || isVenturesLoading) {
     return <div className="mt-4 flex justify-center  border-black">Loading</div>;
   }
 

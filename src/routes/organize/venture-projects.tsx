@@ -2,11 +2,17 @@ import { useQuery } from "react-query";
 import { getVentureById } from "../../api/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
+import { getCurrentUser } from "../../firebase/auth";
 
 function VentureProjects() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isLoading, isError, data, error, isSuccess } = useQuery(["ventures", id], () => getVentureById(id));
+  
+  const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
+  
+  const { isLoading, isError, data, error, isSuccess } = useQuery(["ventures", id], () => getVentureById(user!.uid ,id),{
+    enabled:!!user
+  });
   
   return (
     <div className="mt-4 grid grid-cols-1 gap-y-2">

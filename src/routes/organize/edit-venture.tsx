@@ -3,17 +3,21 @@ import { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { getVentureById, updateVentureById } from "../../api/api";
+import { getCurrentUser } from "../../firebase/auth";
 
 function VentureEdit() {
   const { id } = useParams();
+  const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [ventureName, setVentureName] = useState("");
-  const { isLoading, isError, data, error, isSuccess } = useQuery(["ventures", id], () => getVentureById(id), {
+  const { isLoading, isError, data, error, isSuccess } = useQuery(["ventures", id], () => getVentureById(user!.uid ,id), {
     onSuccess: (data) => {
       setVentureName(data.name);
     },
+    enabled:!!user
   });
 
   const [showNameError, setShowNameError] = useState(false);
@@ -33,9 +37,13 @@ function VentureEdit() {
       return;
     }
 
-    ventureUpdateMutation.mutate({ id: id, name: ventureName });
+    ventureUpdateMutation.mutate({ uid:user!.uid, id: id, name: ventureName });
     navigate(-1);
   };
+
+  if (isUserLoading || isLoading) {
+    return <div className="mt-4 flex justify-center  border-black">Loading</div>;
+  }
 
   return (
     <div className="mt-4">

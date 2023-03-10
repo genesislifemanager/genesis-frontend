@@ -5,36 +5,44 @@ const api = axios.create({
   baseURL: "http://localhost:5174/api",
 });
 
-export const getAllTimeblocks = async () => {
+export const createUser = async (user:{uid:string}) =>{
   try {
-    const res = await api.get("/timeblocks");
+    const createdUser = await api.post("/users",user);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getAllTimeblocks = async (uid:string) => {
+  try {
+    const res = await api.get(`/timeblocks/${uid}`);
     return res.data.timeblocks;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }
 };
 
-export const getOpenTimeBlocksByDate = async (date:dayjs.Dayjs) =>{
+export const getOpenTimeBlocksByDate = async (uid:string, date:dayjs.Dayjs) =>{
   try {
-    const res = await api.get(`/timeblocks/date/${JSON.stringify(date)}?status=open`);
+    const res = await api.get(`/timeblocks/${uid}/date/${JSON.stringify(date)}?status=open`);
     return res.data.timeblocks;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }
 }
 
-export const getClosedTimeBlocksByDate = async (date:dayjs.Dayjs) =>{
+export const getClosedTimeBlocksByDate = async (uid:string,date:dayjs.Dayjs) =>{
   try {
-    const res = await api.get(`/timeblocks/date/${JSON.stringify(date)}?status=closed`);
+    const res = await api.get(`/timeblocks/${uid}/date/${JSON.stringify(date)}?status=closed`);
     return res.data.timeblocks;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }
 }
 
-export const getTimeblockById = async (id: string | undefined) => {
+export const getTimeblockById = async (uid:string, id: string | undefined) => {
   try {
-    const res = await api.get(`/timeblocks/${id}`);
+    const res = await api.get(`/timeblocks/${uid}/${id}`);
 
     return res.data.timeblock;
   } catch (error) {
@@ -48,7 +56,7 @@ export const createTimeblock = async (timeblock: any) => {
   timeblock.duration.m = parseInt(timeblock.duration.m);
 
   try {
-    const res = await api.post("/timeblocks", timeblock);
+    const res = await api.post(`/timeblocks/${timeblock.uid}`, timeblock);
     return res.data.newTimeblock;
   } catch (error) {
     throw new Error("Unable to connect to the server");
@@ -61,25 +69,25 @@ export const updateTimeblockById = async (timeblock: any) => {
   timeblock.duration.m = parseInt(timeblock.duration.m);
 
   try {
-    const res = await api.put(`/timeblocks/${timeblock.id}`,timeblock);
+    const res = await api.put(`/timeblocks/${timeblock.uid}/${timeblock.id}`,timeblock);
     return res.data.updatedTimeblock;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }
 };
 
-export const deleteTimeblockById = async (id:string|undefined) => {
+export const deleteTimeblockById = async ({uid,id}:{uid:string, id:string|undefined}) => {
   try {
-    const res = await api.delete(`/timeblocks/${id}`);
+    const res = await api.delete(`/timeblocks/${uid}/${id}`);
     return res.data.deletedTimeblock;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }
 };
 
-export const getAllProjects = async () => {
+export const getAllProjects = async (uid:string) => {
   try {
-    const res = await api.get("/projects");
+    const res = await api.get(`/projects/${uid}`);
     return res.data.projects;
   } catch (error) {
     throw new Error("Unable to connect to the server");
@@ -91,16 +99,16 @@ export const createProject = async (project:any) => {
   project.duration.m = parseInt(project.duration.m);
 
   try {
-    const res = await api.post("/projects",project);
+    const res = await api.post(`/projects/${project.uid}`,project);
     return res.data.newProject;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }
 };
 
-export const getProjectById = async (id: string | undefined) => {
+export const getProjectById = async (uid:string, id: string | undefined) => {
   try {
-    const res = await api.get(`/projects/${id}`);
+    const res = await api.get(`/projects/${uid}/${id}`);
     return res.data.project;
   } catch (error) {
     throw new Error("Unable to connect to the server");
@@ -113,34 +121,35 @@ export const updateProjectById = async (project: any) => {
   project.duration.m = parseInt(project.duration.m);
 
   try {
-    const res = await api.put(`/projects/${project.id}`, project);
+    const res = await api.put(`/projects/${project.uid}/${project.id}`, project);
     return res.data.updatedProject;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }
 };
 
-export const deleteProjectById = async (id:string|undefined) => {
+export const deleteProjectById = async ({uid,id}:{uid:string, id:string|undefined}) => {
   try {
-    const res = await api.delete(`/projects/${id}`);
+    const res = await api.delete(`/projects/${uid}/${id}`);
     return res.data.deletedProject;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }
 };
 
-export const getAllVentures = async () => {
+export const getAllVentures = async (uid:string) => {
   try {
-    const res = await api.get("/ventures");
+    const res = await api.get(`/ventures/${uid}`);
     return res.data.ventures;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }
 };
 
-export const getVentureById = async (id: string | undefined) => {
-  try {
-    const res = await api.get(`/ventures/${id}`);
+export const getVentureById = async (uid:string, id: string | undefined) => {
+  try {    
+    
+    const res = await api.get(`/ventures/${uid}/${id}`);
     return res.data.venture;
   } catch (error) {
     throw new Error("Unable to connect to the server");
@@ -150,7 +159,7 @@ export const getVentureById = async (id: string | undefined) => {
 export const createVenture = async (venture:any) => {
 
   try {
-    const res = await api.post("/ventures",venture);
+    const res = await api.post(`/ventures/${venture.uid}`,venture);
     return res.data.newVenture;
   } catch (error) {
     throw new Error("Unable to connect to the server");
@@ -161,16 +170,16 @@ export const updateVentureById = async (venture: any) => {
   console.log(venture);
 
   try {
-    const res = await api.put(`/ventures/${venture.id}`, venture);
+    const res = await api.put(`/ventures/${venture.uid}/${venture.id}`, venture);
     return res.data.updatedVenture;
   } catch (error) {
     throw new Error("Unable to connect to the server");
   }
 };
 
-export const deleteVentureById = async (id:string|undefined) => {
+export const deleteVentureById = async ({uid,id}:{uid:string, id:string|undefined}) => {
   try {
-    const res = await api.delete(`/ventures/${id}`);
+    const res = await api.delete(`/ventures/${uid}/${id}`);
     return res.data.deletedVenture;
   } catch (error) {
     throw new Error("Unable to connect to the server");

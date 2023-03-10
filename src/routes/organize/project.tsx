@@ -12,6 +12,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker/DateTimePicke
 import TextField from "@mui/material/TextField/TextField";
 import { Listbox } from "@headlessui/react";
 import isNumber from "is-number";
+import { getCurrentUser } from "../../firebase/auth";
 
 const statuses = [
   { id: 1, label: "Open", value: "open" },
@@ -21,6 +22,8 @@ const statuses = [
 
 function Project() {
   const { id } = useParams();
+  const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
+
   const navigate = useNavigate();
 
   const [projectName, setProjectName] = useState("");
@@ -38,10 +41,12 @@ function Project() {
     isLoading:isVenturesLoading,
     data: ventures,
   } = useQuery("ventures", async () => {
-    const ventures = await getAllVentures();
+    const ventures = await getAllVentures(user!.uid);
     return ventures.map((venture: any) => {
       return { ...venture, label: venture.name, value: venture.name.toLowerCase() };
     });
+  },{
+    enabled:!!user
   });
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -82,11 +87,11 @@ function Project() {
       return;
     }
 
-    projectUpdateMutation.mutate({ id:id, name: projectName, status: status.value, due, duration,ventureId:venture.id });
+    projectUpdateMutation.mutate({ uid:user!.uid, id:id, name: projectName, status: status.value, due, duration,ventureId:venture.id });
     navigate(-1);
   };
 
-  const { isLoading:isProjectLoading, isError, data, error, isSuccess } = useQuery(["projects", id], () => getProjectById(id), {
+  const { isLoading:isProjectLoading, isError, data, error, isSuccess } = useQuery(["projects", id], () => getProjectById(user!.uid,id), {
     onSuccess: (data) => {
       setProjectName(data.name);
       setStatus(statuses[statuses.findIndex((status) => status.value === data.status)]);
@@ -98,7 +103,7 @@ function Project() {
     },
   });
 
-  if (isProjectLoading || isVenturesLoading) {
+  if (isUserLoading || isProjectLoading || isVenturesLoading) {
     return <div className="mt-4 flex justify-center  border-black">Loading</div>;
   }
 
@@ -121,7 +126,7 @@ function Project() {
           height={20}
           className="cursor-pointer"
           onClick={() => {
-            projectDeleteMutation.mutate(id);
+            projectDeleteMutation.mutate({uid:user!.uid, id:id});
             navigate(-1);
           }}
         />

@@ -13,6 +13,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import isNumber from "is-number";
 import { DateContext } from "../../contexts/DateContext";
 import dayjs from "dayjs";
+import { getCurrentUser } from "../../firebase/auth";
 
 const types = [
   { id: 1, label: "Task", value: "task" },
@@ -32,6 +33,8 @@ const projects = [
 function CreateTimeBlock() {
   const { selectedDate } = useContext(DateContext);
 
+  const { isLoading: isUserLoading, data: user } = useQuery("user", getCurrentUser);
+  
   const navigate = useNavigate();
   const [timeblockName, setTimeblockName] = useState("");
   const [type, setType] = useState(types[0]);
@@ -101,6 +104,7 @@ function CreateTimeBlock() {
     }
 
     timeblockMutation.mutate({
+      uid:user!.uid,
       name: timeblockName,
       type: type.value,
       mode: mode.value,
@@ -112,7 +116,7 @@ function CreateTimeBlock() {
     navigate(-1);
   };
 
-  if (isLoading) {
+  if (isLoading || isUserLoading) {
     return (
       <div className="mt-4 border-black">
         <div className="cursor-pointer flex gap-x-4 items-center">

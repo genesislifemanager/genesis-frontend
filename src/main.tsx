@@ -61,7 +61,7 @@ const router = createBrowserRouter([
             element: <Projects />,
           },
           {
-            path: ":organize/projects/:id",
+            path: "organize/projects/:id",
             element: <Project />,
           },
           {
@@ -77,7 +77,7 @@ const router = createBrowserRouter([
             element: <CreateVenture />,
           },
           {
-            path: ":organize/ventures/:id",
+            path: "organize/ventures/:id",
             element: <Venture />,
             children:[
               {

@@ -10,19 +10,19 @@ function SignUp() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async(e: MouseEvent<HTMLButtonElement>) => {
-
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     if (
-        formData.fname === "" ||
-        formData.lname === "" ||
-        formData.email === "" ||
-        formData.password === "" ||
-        formData.confirmPassword === ""
-        ) {
-            return;
-        }
-        if (formData.password !== formData.confirmPassword) return;        
+      formData.fname === "" ||
+      formData.lname === "" ||
+      formData.email === "" ||
+      formData.password === "" ||
+      formData.confirmPassword === ""
+    ) {
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) return;
     await signUpUser(formData.email, formData.password);
+    
     navigate("/home/timeblocks");
   };
 
@@ -65,10 +65,7 @@ function SignUp() {
           className="border border-black w-full px-4 py-2 rounded"
           placeholder="Confirm Password"
         />
-        <button          
-          onClick={handleSubmit}
-          className="border border-black w-full px-4 py-2 rounded font-semibold"
-        >
+        <button onClick={handleSubmit} className="border border-black w-full px-4 py-2 rounded font-semibold">
           Create Account
         </button>
       </div>

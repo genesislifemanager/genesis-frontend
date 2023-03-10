@@ -9,11 +9,15 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import TextField from "@mui/material/TextField/TextField";
 import dayjs from "dayjs";
 import isNumber from "is-number";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { createProject, createVenture } from "../../api/api";
+import { getCurrentUser } from "../../firebase/auth";
 
 function CreateVenture() {
   const navigate = useNavigate();
+  
+  const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
+
   const [ventureName, setVentureName] = useState("");
   
   const [showNameError, setShowNameError] = useState(false);
@@ -34,7 +38,7 @@ function CreateVenture() {
       }, 500);
       return;
     }
-    ventureMutation.mutate({ name: ventureName });
+    ventureMutation.mutate({ uid:user!.uid, name: ventureName });
     navigate(-1);
   };
 

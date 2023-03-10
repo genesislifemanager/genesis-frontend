@@ -15,6 +15,7 @@ import clsx from "clsx";
 import isNumber from "is-number";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { getCurrentUser } from "../../firebase/auth";
 
 const types = [
   { id: 1, label: "Task", value: "task" },
@@ -35,6 +36,7 @@ function TimeBlock() {
   const { id } = useParams();
   const navigate = useNavigate();
   // const [projects,setProjects] = useState([]);
+  const { isLoading: isUserLoading, data: user } = useQuery("user", getCurrentUser);
 
   const [timeblockName, setTimeblockName] = useState("");
   const [type, setType] = useState(types[0]);
@@ -56,17 +58,17 @@ function TimeBlock() {
   const [showNameError, setShowNameError] = useState(false);
   const [showDurationError, setShowDurationError] = useState(false);
 
-  const {
-    isLoading:isProjectsLoading,
-    data: projects,
-  } = useQuery(
+  const { isLoading: isProjectsLoading, data: projects } = useQuery(
     "projects",
     async () => {
-      const data = await getAllProjects();
+      const data = await getAllProjects(user!.uid);
       return data.map((project: any) => {
         return { ...project, label: project.name, value: project.name.toLowerCase() };
       });
     },
+    {
+      enabled: !!user,
+    }
   );
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -106,6 +108,7 @@ function TimeBlock() {
     }
 
     timeblockUpdateMutation.mutate({
+      uid: user!.uid,
       id: id,
       name: timeblockName,
       type: type.value,
@@ -118,20 +121,31 @@ function TimeBlock() {
     navigate(-1);
   };
 
-  const { isLoading:isTimeblockLoading, isError, data, error, isSuccess } = useQuery(["timeblocks", id], () => getTimeblockById(id), {
-    onSuccess: (data) => {      
+  const {
+    isLoading: isTimeblockLoading,
+    isError,
+    data,
+    error,
+    isSuccess,
+  } = useQuery(["timeblocks", id], () => getTimeblockById(user!.uid, id), {
+    onSuccess: (data) => {
       setTimeblockName(data.name);
       setType(types[types.findIndex((type) => type.value === data.type)]);
       setMode(modes[modes.findIndex((mode) => mode.value === data.mode)]);
       setS(dayjs(data.s));
       setDuration({ h: data.duration.h.toString(), m: data.duration.m.toString() });
-      setProject(projects.find((project:any) => {
-        return project.id === data.projectId;
-      }))
+      console.log(projects);
+      console.log(data);
+      setProject(
+        projects.find((project: any) => {
+          return project.id === data.projectId;
+        })
+      );
     },
+    enabled: !!user && !!projects,
   });
 
-  if (isTimeblockLoading || isProjectsLoading) {
+  if (isUserLoading || isTimeblockLoading || isProjectsLoading) {
     return <div className="mt-4 flex justify-center  border-black">Loading</div>;
   }
 
@@ -146,20 +160,13 @@ function TimeBlock() {
               navigate(-1);
             }}
           />
-          <h1
-            className="text-xl font-semibold"
-            onClick={async () => {
-              await getTimeblockById(id);
-            }}
-          >
-            {data.name}
-          </h1>
+          <h1 className="text-xl font-semibold">{data.name}</h1>
         </div>
         <TrashIcon
           width={20}
           height={20}
           onClick={() => {
-            timeblockDeleteMutation.mutate(id);
+            timeblockDeleteMutation.mutate({ uid: user!.uid, id: id });
             navigate(-1);
           }}
         />
@@ -247,7 +254,7 @@ function TimeBlock() {
                 <ChevronDownIcon width={20} height={20} />
               </Listbox.Button>
               <Listbox.Options className={"border bg-slate-200 z-10 absolute left-0 right-0 mt-1 rounded border-black"}>
-                {projects.map((project:any) => (
+                {projects.map((project: any) => (
                   <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={project.id} value={project}>
                     {project.label}
                   </Listbox.Option>

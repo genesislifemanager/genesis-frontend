@@ -6,9 +6,14 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { deleteVentureById, getVentureById, updateVentureById } from "../../api/api";
 import { NavLink } from "react-router-dom";
+import { getCurrentUser } from "../../firebase/auth";
 
 function Venture() {
   const { id } = useParams();
+  console.log(id);
+  
+  const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
+
   const navigate = useNavigate();
 
   const [ventureName, setVentureName] = useState("");
@@ -21,13 +26,14 @@ function Venture() {
     },
   });
 
-  const { isLoading, isError, data, error, isSuccess } = useQuery(["ventures", id], () => getVentureById(id), {
+  const { isLoading, isError, data, error, isSuccess } = useQuery(["ventures", id], () => getVentureById(user!.uid, id), {
     onSuccess: (data) => {
       setVentureName(data.name);
     },
+    enabled:!!user
   });
 
-  if (isLoading) {
+  if (isUserLoading || isLoading) {
     return <div className="mt-4 flex justify-center  border-black">Loading</div>;
   }
 
@@ -50,7 +56,7 @@ function Venture() {
           height={20}
           className="cursor-pointer"
           onClick={() => {
-            ventureDeleteMutation.mutate(id);
+            ventureDeleteMutation.mutate({uid:user!.uid, id:id});
             navigate(-1);
           }}
         />

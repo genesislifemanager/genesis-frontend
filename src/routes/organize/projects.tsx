@@ -2,17 +2,26 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { PlusCircleIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "react-query";
 import { getAllProjects, getAllVentures } from "../../api/api";
+import { getCurrentUser } from "../../firebase/auth";
 
 function Projects() {
   const navigate = useNavigate();
-  const { isLoading, isError, data:ventures, error, isSuccess } = useQuery("ventures", getAllVentures);
+  
+  const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
+  
+  const { isLoading, isError, data:ventures, error, isSuccess } = useQuery("ventures", async () => {
+    const data = await getAllVentures(user!.uid);
+    return data;
+  },{
+    enabled:!!user
+  });
 
   if (isLoading) {
     return (
       <div className=" border-black mt-4">
         <h1 className="text-2xl font-semibold">Projects</h1>
         <div className="mt-4">
-          <NavLink to={"/home/timeblocks/create"}>
+          <NavLink to={"/organize/projects/create"}>
             <div className="border border-black flex justify-center px-2 py-2 rounded">
               <PlusCircleIcon width={20} height={20} />
             </div>

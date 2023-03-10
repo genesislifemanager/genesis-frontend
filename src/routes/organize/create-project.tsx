@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import isNumber from "is-number";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { createProject, getAllVentures } from "../../api/api";
+import { getCurrentUser } from "../../firebase/auth";
 
 const statuses = [
   { id: 1, label: "Open", value: "open" },
@@ -20,6 +21,8 @@ const statuses = [
 
 function CreateProject() {
   const navigate = useNavigate();
+  const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
+
   const [projectName, setProjectName] = useState("");
   const [status, setStatus] = useState(statuses[0]);
   const [due, setDue] = useState<dayjs.Dayjs>(dayjs());
@@ -37,10 +40,12 @@ function CreateProject() {
     error,
     isSuccess,
   } = useQuery("ventures", async () => {
-    const ventures = await getAllVentures();
+    const ventures = await getAllVentures(user!.uid);
     return ventures.map((venture: any) => {
       return { ...venture, label: venture.name, value: venture.name.toLowerCase() };
     });
+  }, {
+    enabled:!!user
   });
 
   const handleDurationChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +79,7 @@ function CreateProject() {
       return;
     }
     
-    projectMutation.mutate({ name: projectName, status: status.value, due, duration, ventureId: venture.id });
+    projectMutation.mutate({ uid:user!.uid, name: projectName, status: status.value, due, duration, ventureId: venture.id });
     navigate(-1);
   };
 

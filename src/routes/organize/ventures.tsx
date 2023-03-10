@@ -3,12 +3,19 @@ import { useQuery } from "react-query";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getAllVentures } from "../../api/api";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
+import { getCurrentUser } from "../../firebase/auth";
 
 function Ventures() {
   const navigate = useNavigate();
-  const { isLoading, isError, data, error, isSuccess } = useQuery("ventures", getAllVentures);
 
-  if (isLoading) {
+  const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
+
+
+  const { isLoading, isError, data, error, isSuccess } = useQuery("ventures", ()=> getAllVentures(user!.uid),{
+    enabled:!!user
+  });
+
+  if (isUserLoading || isLoading) {
     return (
       <div className=" border-black mt-4">
         <h1 className="text-2xl font-semibold">Projects</h1>

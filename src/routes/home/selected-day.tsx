@@ -16,6 +16,7 @@ import isYesterday from "dayjs/plugin/isYesterday";
 import isTomorrow from "dayjs/plugin/isTomorrow";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import clsx from "clsx";
+import { getCurrentUser } from "../../firebase/auth";
 dayjs.extend(isToday);
 dayjs.extend(isYesterday);
 dayjs.extend(isTomorrow);
@@ -23,14 +24,23 @@ dayjs.extend(advancedFormat);
 
 function SelectedDay() {
   const { selectedDate } = useContext(DateContext);
+
+  const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
+
   const { isLoading: isOpenTimeblocksLoading, data: openTimeblocks } = useQuery(
     ["timeblocks", selectedDate, { status: "open" }],
-    () => getOpenTimeBlocksByDate(selectedDate)
+    () => getOpenTimeBlocksByDate(user!.uid, selectedDate),
+    {
+      enabled: !!user,
+    }
   );
 
   const { isLoading: isClosedTimeblocksLoading, data: closedTimeblocks } = useQuery(
     ["timeblocks", selectedDate, { status: "closed" }],
-    () => getClosedTimeBlocksByDate(selectedDate)
+    () => getClosedTimeBlocksByDate(user!.uid,selectedDate),
+    {
+      enabled: !!user,
+    }
   );
 
   const navigate = useNavigate();
@@ -105,11 +115,12 @@ function TimeblockCards({
   timeblocks: any;
   getFormattedTime: (dateTime: string) => string;
 }) {
-  
   if (timeblocks.length === 0) {
-    return (<div className="grid grid-cols-1 gap-y-2 mt-2 border-black">
-      <h1>No timeblocks to view</h1>
-    </div>);
+    return (
+      <div className="grid grid-cols-1 gap-y-2 mt-2 border-black">
+        <h1>No timeblocks to view</h1>
+      </div>
+    );
   }
   return (
     <div className="grid grid-cols-1 gap-y-2 mt-2 border-black">

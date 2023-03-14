@@ -44,14 +44,14 @@ function Root() {
 
   if (isLoading) {
     return (
-      <div className=" px-4 py-4 min-h-screen items-center flex justify-center border relative border-black">
+      <div className=" px-4 py-4 h-screen items-center flex justify-center border relative border-black">
         <h1 className="text-2xl">Loading...</h1>
       </div>
     );
   }
 
   return (
-    <div className="px-4 py-4 min-h-screen border relative border-black">
+    <div className="px-4 py-4 h-screen border relative border-black">
       <Header />
       <Outlet />
       <div className="flex justify-center rounded-lg left-4 gap-x-16 right-4 bottom-4 absolute py-2 px-4 border border-black">

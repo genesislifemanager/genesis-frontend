@@ -34,7 +34,7 @@ function CreateTimeBlock() {
   const { selectedDate } = useContext(DateContext);
 
   const { isLoading: isUserLoading, data: user } = useQuery("user", getCurrentUser);
-  
+
   const navigate = useNavigate();
   const [timeblockName, setTimeblockName] = useState("");
   const [type, setType] = useState(types[0]);
@@ -71,7 +71,7 @@ function CreateTimeBlock() {
       });
     },
     {
-      enabled:!!user
+      enabled: !!user,
     }
   );
 
@@ -107,7 +107,7 @@ function CreateTimeBlock() {
     }
 
     timeblockMutation.mutate({
-      uid:user!.uid,
+      uid: user!.uid,
       name: timeblockName,
       type: type.value,
       mode: mode.value,
@@ -116,6 +116,7 @@ function CreateTimeBlock() {
       projectId: project.id,
       reminder: null,
     });
+
     navigate(-1);
   };
 

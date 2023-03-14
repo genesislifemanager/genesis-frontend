@@ -43,6 +43,14 @@ function SelectedDay() {
     }
   );
 
+  const queryClient = useQueryClient();
+
+  const statusUpdateMutation = useMutation(updateTimeblockById, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("timeblocks");
+    },
+  });
+
   const navigate = useNavigate();
 
   const getFormattedTime = (dateTime: string) => {
@@ -62,10 +70,10 @@ function SelectedDay() {
     return date.format("Do MMMM YYYY");
   };
 
-  if (isUserLoading ||  isOpenTimeblocksIdle || isClosedTimeblocksIdle ||   isClosedTimeblocksLoading || isOpenTimeblocksLoading) {
+  if (statusUpdateMutation.isLoading || isUserLoading ||  isOpenTimeblocksIdle || isClosedTimeblocksIdle ||   isClosedTimeblocksLoading || isOpenTimeblocksLoading) {
     return (
       <div className="mt-4 border-black">
-        <h1 className="text-2xl font-semibold">Today</h1>
+        <h1 className="text-2xl font-semibold">{getHeadingForDate(selectedDate)}</h1>
         <div className="mt-4 ">
           <NavLink to={"/home/timeblocks/create"}>
             <div className="border border-black flex justify-center px-2 py-2 rounded">
@@ -74,7 +82,7 @@ function SelectedDay() {
           </NavLink>
 
           <div className="grid grid-cols-1 place-items-center border-black mt-2">
-            <span className="block">Loading</span>
+            <span className="block">Loading...</span>
           </div>
         </div>
       </div>
@@ -93,10 +101,10 @@ function SelectedDay() {
 
         <div>
           <h1 className="text-lg mt-4 font-medium">Open</h1>
-          <TimeblockCards timeblocks={openTimeblocks} getFormattedTime={getFormattedTime} />
+          <TimeblockCards statusUpdateMutation={statusUpdateMutation} timeblocks={openTimeblocks} getFormattedTime={getFormattedTime} />
 
           <h1 className="text-lg mt-4 font-medium">Closed</h1>
-          <TimeblockCards timeblocks={closedTimeblocks} getFormattedTime={getFormattedTime} />
+          <TimeblockCards statusUpdateMutation={statusUpdateMutation} timeblocks={closedTimeblocks} getFormattedTime={getFormattedTime} />
         </div>
       </div>
     </div>
@@ -106,9 +114,11 @@ function SelectedDay() {
 function TimeblockCards({
   timeblocks,
   getFormattedTime,
+  statusUpdateMutation
 }: {
   timeblocks: any;
   getFormattedTime: (dateTime: string) => string;
+  statusUpdateMutation:any
 }) {
 
   if (timeblocks.length === 0) {
@@ -121,7 +131,7 @@ function TimeblockCards({
   return (
     <div className="grid grid-cols-1 gap-y-2 mt-2 border-black">
       {timeblocks.map((timeblock: any) => {
-        return <TimeBlockCard key={timeblock.id} timeblock={timeblock} getFormattedTime={getFormattedTime} />;
+        return <TimeBlockCard statusUpdateMutation={statusUpdateMutation}  key={timeblock.id} timeblock={timeblock} getFormattedTime={getFormattedTime} />;
       })}
     </div>
   );
@@ -130,16 +140,18 @@ function TimeblockCards({
 function TimeBlockCard({
   timeblock,
   getFormattedTime,
+  statusUpdateMutation
 }: {
   timeblock: any;
   getFormattedTime: (dateTime: string) => string;
+  statusUpdateMutation:any
 }) {
   const navigate = useNavigate();
 
   return (
     <div key={timeblock.id} className="border  flex justify-between border-black items-center px-4 py-2 rounded">
       <div className="flex items-center gap-x-2">
-        <RadioBtn timeblock={timeblock} />
+        <RadioBtn timeblock={timeblock} statusUpdateMutation={statusUpdateMutation}/>
         <span className={clsx("block text-base", { "line-through": timeblock.status === "closed" })}>
           {timeblock.name}
         </span>
@@ -161,14 +173,8 @@ function TimeBlockCard({
   );
 }
 
-function RadioBtn({ timeblock }: { timeblock: any }) {
-  const queryClient = useQueryClient();
-
-  const statusUpdateMutation = useMutation(updateTimeblockById, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("timeblocks");
-    },
-  });
+function RadioBtn({ timeblock,statusUpdateMutation }: { timeblock: any,statusUpdateMutation:any }) {
+  
 
   const handleClickWhenOpen = () => {
     statusUpdateMutation.mutate({ ...timeblock, status: "closed" });

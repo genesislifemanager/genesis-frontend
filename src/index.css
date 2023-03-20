@@ -31,3 +31,7 @@
 .MuiPaper-root{
   border-radius: 8px;
 }
+
+.container{
+  min-height: 100dvh !important;
+}

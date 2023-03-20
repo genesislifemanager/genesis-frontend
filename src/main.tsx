@@ -23,6 +23,7 @@ import CreateVenture from "./routes/organize/create-venture";
 import VentureEdit from "./routes/organize/edit-venture";
 import VentureProjects from "./routes/organize/venture-projects";
 import SignIn from "./routes/signin";
+import Settings from "./routes/settings/settings";
 
 const router = createBrowserRouter([
   {
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
           
         ],
       },
+      {
+        path:"settings",
+        element: <Settings />,         
+      }
     ],
   },
   {

@@ -2,7 +2,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 
 const api = axios.create({
-  baseURL: "https://genesis-backend-dev-production.up.railway.app/api",
+  baseURL: " http://localhost:5174/api",
 });
 
 export const createUser = async (user: { uid: string }) => {

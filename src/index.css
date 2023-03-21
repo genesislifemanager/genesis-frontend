@@ -32,6 +32,6 @@
   border-radius: 8px;
 }
 
-.container{
-  min-height: 100lvh !important;
+.root-layout{
+  min-height: 100svh !important;
 }

@@ -18,7 +18,7 @@ function SignIn() {
   };
 
   return (
-    <div className="min-h-screen border border-black py-16 px-4">
+    <div className="root-layout border border-black py-16 px-4">
       <h1 className="text-center font-semibold text-2xl">Sign In Your Account</h1>
       <div className="mt-4 py-4 grid grid-cols-1 gap-y-4">
         

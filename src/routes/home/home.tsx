@@ -8,8 +8,8 @@ function Home() {
   const [selectedDate,setSelectedDate] = useState(dayjs());
 
   return (
-    <div className="mt-4 border-black">
-      <div className="border border-black rounded-lg grid grid-cols-2">
+    <div className="mt-4  border-black">
+    <div className="bg-genesis-gray-200 border-black rounded-xl px-1.5 py-1.5 grid grid-cols-2">  
         {/* <NavLink to={"/home/overview"}>
           {({ isActive }) => {
             return (
@@ -27,8 +27,8 @@ function Home() {
           {({ isActive }) => {
             return (
               <span
-                className={clsx("block text-center px-1 py-1 font-semibold", {
-                  "border border-black rounded-lg": isActive,
+              className={clsx("block text-sm text-center px-1 py-1 font-semibold", {
+                "bg-genesis-gray-300 rounded-lg": isActive, 
                 })}
               >
                 Time Blocks
@@ -40,8 +40,8 @@ function Home() {
           {({ isActive }) => {
             return (
               <span
-                className={clsx("block text-center px-1 py-1 font-semibold", {
-                  "border border-black rounded-lg": isActive,
+              className={clsx("block text-sm text-center px-1 py-1 font-semibold", {
+                "bg-genesis-gray-300 rounded-lg": isActive,  
                 })}
               >
                 Calendar

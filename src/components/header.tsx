@@ -20,22 +20,22 @@ function Header() {
 
   if (isUserLoading) {
     return (
-      <div className="border border-black py-4 px-4 rounded-lg">
-        <span className="block text-base font-semibold">Loading...</span>
-        <div>
-          <span className="block font-semibold text-2xl">{time.format("HH:mm:ss")}</span>
-          <span className="block font-semibold text-xl">{dayjs().format("Do MMMM YYYY")}</span>
+      <div className="bg-genesis-gray-200 border-black py-4 px-4 rounded-xl">
+      <span className="block text-genesis-green-300 text-base font-semibold">Loading...</span>
+      <div>
+        <span className="block font-semibold text-4xl">{time.format("HH:mm")}</span>
+        <span className="block font-semibold text-base">{dayjs().format("Do MMMM YYYY")}</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="border border-black py-4 px-4 rounded-lg">
-      <span className="block text-base font-semibold">Hey, {user?.displayName}</span>
+    <div className="bg-genesis-gray-200 border-black py-4 px-4 rounded-xl">
+      <span className="block text-genesis-green-300 text-base font-semibold">Hey, {user?.displayName}</span>
       <div>
-        <span className="block font-semibold text-2xl">{time.format("HH:mm:ss")}</span>
-        <span className="block font-semibold text-xl">{dayjs().format("Do MMMM YYYY")}</span>
+      <span className="block font-semibold text-4xl">{time.format("HH:mm")}</span>
+        <span className="block font-semibold text-base">{dayjs().format("Do MMMM YYYY")}</span>
       </div>
     </div>
   );

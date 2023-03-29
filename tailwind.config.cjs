@@ -9,7 +9,8 @@ content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
             300: "#E7EAED",
             400: "#6D6E6E",
             500:"#6D6E6F",
-            600:"#D9D9D9"
+            600:"#D9D9D9",
+            700:"#F4F4F4"
           },
           "genesis-green": {
             300: "#51AAA5",
@@ -18,7 +19,10 @@ content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
             300:'#919AB1'
           }
         },
+        borderRadius:{
+          '1.5xl':'14px'
+        } 
       },
-      plugins: [],
-    }
-  }
+    },
+    plugins: [],
+    };

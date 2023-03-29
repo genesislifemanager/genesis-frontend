@@ -51,10 +51,10 @@ function Root() {
   }
 
   return (
-    <div className="root-layout px-4 py-4  border relative border-black">
+    <div className="root-layout px-4 py-4 border relative border-black">  
       <Header />
       <Outlet />
-      <div className="flex justify-center rounded-lg left-4 gap-x-16 right-4 bottom-4 absolute py-2 px-4 border border-black">
+      <div className="flex bg-genesis-gray-300 justify-center rounded-lg left-4 gap-x-16 right-4 bottom-4 absolute py-2 px-4  border-black">
         <NavLink to={"/organize/projects"}>
           <Bars3Icon width={24} height={24} />
         </NavLink>
@@ -67,9 +67,9 @@ function Root() {
       </div>
       <div
         onClick={handleClickOpen}
-        className="absolute w-12 h-12 border border-black cursor-pointer rounded-full bottom-20 flex items-center justify-center right-4"
+        className="absolute w-12 h-12  bg-genesis-gray-600 border-black cursor-pointer rounded-xl bottom-20 flex items-center justify-center right-4"  
       >
-        <ChatBubbleOvalLeftEllipsisIcon width={24} height={24} />
+       <ChatBubbleOvalLeftEllipsisIcon width={24} height={24} className="text-genesis-green-300"/>
       </div>
 
       <Dialog open={open} onClose={handleClose}>

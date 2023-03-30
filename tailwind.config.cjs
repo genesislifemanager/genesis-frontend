@@ -10,7 +10,8 @@ content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
             400: "#6D6E6E",
             500:"#6D6E6F",
             600:"#D9D9D9",
-            700:"#F4F4F4"
+            700:"#F4F4F4",
+            800:"#65686D",
           },
           "genesis-green": {
             300: "#51AAA5",

@@ -142,7 +142,7 @@ function CreateTimeBlock() {
   }
 
   return (
-    <div className="mt-4 bg-genesis-gray-200 px-4 py-4 rounded-xl border-black">
+    <div className="mt-4 border-black">
       <div className="cursor-pointer flex gap-x-4 items-center">
         <ChevronLeftIcon
           width={20}
@@ -154,10 +154,10 @@ function CreateTimeBlock() {
         <h1 className="text-xl font-semibold">Create Time Block</h1>
       </div>
 
-      <form className="px-4 py-4  border-black mt-4 rounded-2xl bg-white">
+      <form className="px-4">
         <div>
-        <label htmlFor="name" className="block text-genesis-gray-800 text-base font-semibold">
-            Timeblock Name
+          <label htmlFor="name" className="block text-base font-semibold">
+            Name
           </label>
           <input
             id="name"
@@ -165,12 +165,9 @@ function CreateTimeBlock() {
             onChange={(e) => {
               setTimeblockName(e.target.value);
             }}
-            className={clsx(
-              " bg-genesis-gray-200 mt-2 text-genesis-purple-300 border-black w-full text-sm rounded-lg px-1 py-1",
-              {
-                "border-red-500": showNameError,
-              }
-            )}  
+            className={clsx("border mt-2 border-black w-full text-sm rounded px-2 py-1", {
+              "border-red-500": showNameError,
+            })}
             name="name"
             type="text"
           />
@@ -181,26 +178,22 @@ function CreateTimeBlock() {
 
         <div className="grid grid-cols-2 gap-4 border-black">
           <div className="relative mt-4">
-          <label className="block text-base text-genesis-gray-800 font-semibold">Type</label>
+            <label className="block text-base font-semibold">Type</label>
             <Listbox value={type} onChange={setType}>
               <Listbox.Button
                 as="div"
                 className={
-                  "text-genesis-purple-300 mt-2 bg-genesis-gray-200 cursor-pointer text-sm px-1 py-1 rounded-lg flex items-center justify-between border-black"
+                  "border mt-2 cursor-pointer text-sm px-1 py-1 rounded flex items-center justify-between border-black"
                 }
               >
                 <span className="block">{type.label}</span>
                 <ChevronDownIcon width={20} height={20} />
               </Listbox.Button>
               <Listbox.Options
-                className={" outline-none bg-genesis-gray-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
+                className={"border bg-slate-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
               >
                 {types.map((type) => (
-                  <Listbox.Option
-                  className={"cursor-pointer text-genesis-purple-300   text-sm px-1 py-1 "}
-                  key={type.id}
-                  value={type}
-                >
+                  <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={type.id} value={type}>
                     {type.label}
                   </Listbox.Option>
                 ))}
@@ -209,20 +202,20 @@ function CreateTimeBlock() {
           </div>
 
           <div className="relative mt-4">
-          <label className="block text-base text-genesis-gray-800 font-semibold">Mode</label>
+            <label className="block text-base font-semibold">Mode</label>
             <Listbox value={mode} onChange={setMode}>
               <Listbox.Button
                 as="div"
                 className={
-                  "mt-2  cursor-pointer rounded-lg text-sm px-1 py-1 text-genesis-purple-300 bg-genesis-gray-200 flex items-center justify-between border-black"
+                  "border mt-2 cursor-pointer text-sm px-1 py-1 rounded flex items-center justify-between border-black"
                 }
               >
                 <span className="block">{mode.label}</span>
                 <ChevronDownIcon width={20} height={20} />
               </Listbox.Button>
-              <Listbox.Options className={"outline-none bg-genesis-gray-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}>
+              <Listbox.Options className={"border bg-slate-200 z-10 absolute left-0 right-0 mt-1 rounded border-black"}>
                 {modes.map((mode) => (
-                   <Listbox.Option className={"cursor-pointer text-genesis-purple-300   text-sm px-1 py-1 "} key={mode.id} value={mode}>
+                  <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={mode.id} value={mode}>
                     {mode.label}
                   </Listbox.Option>
                 ))}
@@ -231,20 +224,20 @@ function CreateTimeBlock() {
           </div>
 
           <div className="relative">
-          <label className="block text-genesis-gray-800 text-base font-semibold">Project</label>
+            <label className="block text-base font-semibold">Project</label>
             <Listbox value={project} onChange={setProject}>
               <Listbox.Button
                 as="div"
                 className={
-                  "mt-2  cursor-pointer rounded-lg text-sm px-1 py-1 text-genesis-purple-300 bg-genesis-gray-200 flex items-center justify-between border-black"
+                  "border mt-2 cursor-pointer text-sm px-1 py-1 rounded flex items-center justify-between border-black"
                 }
               >
                 <span className="block">{project.label}</span>
                 <ChevronDownIcon width={20} height={20} />
               </Listbox.Button>
-              <Listbox.Options className={"outline-none bg-genesis-gray-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}>
+              <Listbox.Options className={"border bg-slate-200 z-10 absolute left-0 right-0 mt-1 rounded border-black"}>
                 {projects.map((project: any) => (
-                <Listbox.Option className={"cursor-pointer text-genesis-purple-300   text-sm px-1 py-1 "} key={project.id} value={project}>  
+                  <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={project.id} value={project}>
                     {project.label}
                   </Listbox.Option>
                 ))}
@@ -253,7 +246,7 @@ function CreateTimeBlock() {
           </div>
 
           <div className="relative">
-          <Listbox.Option className={"cursor-pointer text-genesis-purple-300   text-sm px-1 py-1 "} key={project.id} value={project}>
+            <label className="block text-base font-semibold">Start Time</label>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <TimePicker
                 ampm={false}
@@ -267,14 +260,14 @@ function CreateTimeBlock() {
           </div>
 
           <div className="relative">
-          <label className="block text-genesis-gray-800 text-base font-semibold">Duration</label>
+            <label className="block text-base font-semibold">Duration</label>
             <div className="mt-2 flex items-center gap-x-2">
               <input
                 type="text"
                 name="h"
                 value={duration.h}
                 onChange={handleDurationChange}
-                className=" w-8  text-genesis-purple-300 text-center block border-black text-base px-1 py-1 rounded-lg bg-genesis-gray-200 outline-none" 
+                className=" w-8 border text-center block border-black text-base px-1 py-1 rounded outline-none"
               />
               <span className="">:</span>
               <input
@@ -282,7 +275,7 @@ function CreateTimeBlock() {
                 name="m"
                 value={duration.m}
                 onChange={handleDurationChange}
-                className=" w-8 text-genesis-purple-300  text-center block border-black text-base px-1 py-1 rounded-lg bg-genesis-gray-200 outline-none"  
+                className=" w-8 border text-center block border-black text-base px-1 py-1 rounded outline-none"
               />
             </div>
             <p className={clsx("text-xs text-red-500", { block: showDurationError, hidden: !showDurationError })}>
@@ -303,8 +296,8 @@ function CreateTimeBlock() {
           <button
             onClick={handleConfirm}
             type="button"
-            className=" block border-black bg-genesis-green-300 text-white rounded-lg px-1 py-2 text-sm font-semibold w-20"  
-            >
+            className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20"
+          >
             Confirm
           </button>
         </div>

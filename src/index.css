@@ -4,20 +4,15 @@
 
 .MuiInputBase-input {
   padding: 4px !important;
-  border:none;
-  border-radius: 8px !important;
+  border: 1px solid black !important;
+  border-radius: 4px !important;
   outline: none !important;
   font-size: 14px !important;
-  cursor: pointer;
-  color: #919AB1 !important;
-
 }
 
 .MuiTextField-root {
   margin-top: 8px !important;
-  border-radius: 8px !important;
   outline: none !important;
-  background-color: #F2F4F5 !important;
 }
 
 .calendar .MuiCalendarPicker-root{

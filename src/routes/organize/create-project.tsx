@@ -155,7 +155,7 @@ function CreateProject() {
 
         <div className="grid mt-4 grid-cols-2 gap-4 border-black">
           <div className="relative">
-            <label className="block text-base font-semibold">Due</label>
+          <label className="block text-genesis-gray-800 text-base font-semibold">Due</label>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
                 ampm={false}
@@ -169,7 +169,7 @@ function CreateProject() {
           </div>
 
           <div className="relative ">
-            <label className="block text-base font-semibold">Status</label>
+          <label className="block text-genesis-gray-800 text-base font-semibold">Status</label>
             <Listbox value={status} onChange={setStatus}>
               <Listbox.Button
                 as="div"
@@ -193,7 +193,7 @@ className={" outline-none bg-genesis-gray-200 absolute z-10 left-0 right-0  mt-1
           </div>
 
           <div className="relative ">
-            <label className="block text-base font-semibold">Venture</label>
+          <label className="block text-genesis-gray-800 text-base font-semibold">Venture</label>
             <Listbox value={venture} onChange={setVenture}>
               <Listbox.Button
                 as="div"

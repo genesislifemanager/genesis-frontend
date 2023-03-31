@@ -34,11 +34,11 @@ function Venture() {
   });
 
   if (isUserLoading || isLoading) {
-    return <div className="mt-4 flex justify-center  border-black">Loading</div>;
+    return <div className="mt-4 bg-genesis-gray-200 px-4 py-4 rounded-xl border-black">Loading</div>;
   }
 
   return (
-    <div className="mt-4 border-black">
+    <div className="mt-4 bg-genesis-gray-200 px-4 py-4 rounded-xl border-black">
       <div className=" flex justify-between items-center pr-4">
         <div className="flex items-center gap-x-4">
           <ChevronLeftIcon
@@ -61,13 +61,14 @@ function Venture() {
           }}
         />
       </div>
-      <div className="mt-4 border flex flex-row items-center w-fit border-black rounded ">
+         
+      <div className="mt-4 bg-white  px-1 py-1 rounded-xl flex flex-row items-center w-fit border-black  ">
         <NavLink to={`/organize/ventures/${id}/projects`}>
           {({ isActive }) => {
             return (
               <span
                 className={clsx("block w-16 px-1 py-0.5 cursor-pointer text-center", {
-                  "border border-black rounded": isActive,
+                  "bg-genesis-gray-300 rounded-lg": isActive,
                 })}
               >
                 Projects
@@ -80,7 +81,7 @@ function Venture() {
             return (
               <span
                 className={clsx("block w-16 px-1 py-0.5 cursor-pointer text-center", {
-                  "border border-black rounded": isActive,
+                  "bg-genesis-gray-300 rounded-lg": isActive,
                 })}
               >
                 Edit

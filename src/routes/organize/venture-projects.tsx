@@ -8,14 +8,18 @@ function VentureProjects() {
   const { id } = useParams();
   const navigate = useNavigate();
   
-  const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
-  
-  const { isLoading, isError, data, error, isSuccess } = useQuery(["ventures", id], () => getVentureById(user!.uid ,id),{
-    enabled:!!user
-  });
+  const { isLoading: isUserLoading, data: user } = useQuery("user", getCurrentUser);
+
+  const { isLoading, isError, data, error, isSuccess } = useQuery(
+    ["ventures", id],
+    () => getVentureById(user!.uid, id),
+    {
+      enabled: !!user,
+    }
+  );
   
   return (
-    <div className="mt-4 grid grid-cols-1 gap-y-2">
+    <div className="border-black px-4 py-4 bg-white rounded-xl mt-4 grid grid-cols-1 gap-y-2">
       {data.projects.map((project: any) => {
         return (
           <div
@@ -23,7 +27,7 @@ function VentureProjects() {
               navigate(`/organize/projects/${project.id}`);
             }}
             key={project.id}
-            className="border  cursor-pointer flex justify-between border-black items-center px-4 py-2 rounded"
+            className="   rounded-2xl px-4 py-4 bg-genesis-gray-700 cursor-pointer flex justify-between border-black items-center " 
           >
             <span className="block text-base">{project.name}</span>
             <div className="flex items-center">

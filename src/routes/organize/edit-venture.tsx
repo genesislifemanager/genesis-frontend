@@ -47,10 +47,9 @@ function VentureEdit() {
 
   return (
     <div className="mt-4">
-      <form className="px-4">
+       <form className="px-4 py-4  border-black mt-4 rounded-2xl bg-white">
         <div>
-          <label htmlFor="name" className="block text-base font-semibold">
-            Name
+        <label htmlFor="name" className="block text-genesis-gray-800 text-base font-semibold">
           </label>
           <input
             id="name"
@@ -58,9 +57,13 @@ function VentureEdit() {
             onChange={(e) => {
               setVentureName(e.target.value);
             }}
-            className={clsx("border mt-2 border-black w-full text-sm rounded px-2 py-1", {
-              "border-red-500": showNameError,
-            })}
+            
+            className={clsx(
+              " bg-genesis-gray-200 mt-2 text-genesis-purple-300 border-black w-full text-sm rounded-lg px-1 py-1",
+              {
+                "border-red-500": showNameError,
+              }
+            )}
             name="name"
             type="text"
           />

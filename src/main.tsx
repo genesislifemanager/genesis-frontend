@@ -108,11 +108,14 @@ const router = createBrowserRouter([
     path: "/auth/signin",
     element: <SignIn />,
   },
-]);
+
 {
   path:"/welcome",
   element: <Welcome />,
 }
+]);
+
+
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

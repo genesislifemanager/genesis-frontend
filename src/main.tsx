@@ -111,7 +111,7 @@ const router = createBrowserRouter([
 ]);
 {
   path:"/welcome",
-  element: <Welcome />;
+  element: <Welcome />,
 }
 const queryClient = new QueryClient();
 

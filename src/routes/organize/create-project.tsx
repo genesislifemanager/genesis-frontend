@@ -235,8 +235,7 @@ className={" outline-none bg-genesis-gray-200 absolute z-10 left-0 right-0  mt-1
                 value={duration.m}
                 onChange={handleDurationChange}
                 className=" w-8 border text-center block border-black text-base px-1 py-1 rounded outline-none"
-                className=" w-8 text-genesis-purple-300  text-center block border-black text-base px-1 py-1 rounded-lg bg-genesis-gray-200 outline-none"
-              />
+                />
             </div>
             <p className={clsx("text-xs text-red-500", { block: showDurationError, hidden: !showDurationError })}>
               Both hours and minutes can't be '0'

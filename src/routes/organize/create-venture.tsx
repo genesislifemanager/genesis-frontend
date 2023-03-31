@@ -16,7 +16,7 @@ import { getCurrentUser } from "../../firebase/auth";
 function CreateVenture() {
   const navigate = useNavigate();
   
-  const { isLoading:isUserLoading, data: user } = useQuery("user", getCurrentUser);
+  const { isLoading: isUserLoading, data: user } = useQuery("user", getCurrentUser);
 
   const [ventureName, setVentureName] = useState("");
   
@@ -38,13 +38,13 @@ function CreateVenture() {
       }, 500);
       return;
     }
-    ventureMutation.mutate({ uid:user!.uid, name: ventureName });
-    navigate(-1);
+
+    ventureMutation.mutate({ uid: user!.uid, name: ventureName });
   };
 
-  return (
+return (
     <div className="mt-4 border-black">
-      <div className="cursor-pointer flex gap-x-4 items-center">
+       <div className="mt-4 bg-genesis-gray-200 px-4 py-4 rounded-xl border-black">
         <ChevronLeftIcon
           width={20}
           height={20}
@@ -54,10 +54,11 @@ function CreateVenture() {
         />
         <h1 className="text-xl font-semibold">Create Venture</h1>
       </div>
-      <form className="px-4">
+      
+      <form className="px-4 py-4  border-black mt-4 rounded-2xl bg-white">
         <div>
-          <label htmlFor="name" className="block text-base font-semibold">
-            Name
+        <label htmlFor="name" className="block text-genesis-gray-800 text-base font-semibold">
+            Venture Name
           </label>
           <input
             id="name"
@@ -65,9 +66,12 @@ function CreateVenture() {
             onChange={(e) => {
               setVentureName(e.target.value);
             }}
-            className={clsx("border mt-2 border-black w-full text-sm rounded px-2 py-1", {
-              "border-red-500": showNameError,
-            })}
+            className={clsx(
+              " bg-genesis-gray-200 mt-2 text-genesis-purple-300 border-black w-full text-sm rounded-lg px-1 py-1",
+              {
+                "border-red-500": showNameError,
+              }
+            )}
             name="name"
             type="text"
           />
@@ -82,14 +86,14 @@ function CreateVenture() {
               navigate(-1);
             }}
             type="button"
-            className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20"
+            className="border-2 text-genesis-gray-800 block border-genesis-gray-800 rounded-lg px-1 py-2 text-sm font-semibold w-20" 
           >
             Cancel
           </button>
           <button
             onClick={handleConfirm}
             type="button"
-            className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20"
+            className=" block border-black bg-genesis-green-300 text-white rounded-lg px-1 py-2 text-sm font-semibold w-20"
           >
             Confirm
           </button>

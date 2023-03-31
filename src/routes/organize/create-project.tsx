@@ -229,6 +229,7 @@ className={" outline-none bg-genesis-gray-200 absolute z-10 left-0 right-0  mt-1
               />
               <span className="">:</span>
               <span className="text-sm font-semibold text-genesis-gray-800">M</span>
+              <input
                 type="text"
                 name="m"
                 value={duration.m}

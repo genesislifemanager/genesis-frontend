@@ -112,7 +112,7 @@ function Project() {
   }
 
   return (
-    <div className="mt-4  border-black">
+    <div className="mt-4 bg-genesis-gray-200 px-4 py-4 rounded-xl border-black">
       <div className=" flex justify-between items-center pr-4">
         <div className="flex items-center gap-x-4">
           <ChevronLeftIcon
@@ -136,10 +136,10 @@ function Project() {
         />
       </div>
 
-      <form className="px-4">
+      <form className="px-4 py-4  border-black mt-4 rounded-2xl bg-white">
         <div>
           <label htmlFor="name" className="block text-base font-semibold">
-            Name
+          Project Name
           </label>
           <input
             id="name"
@@ -147,9 +147,12 @@ function Project() {
             onChange={(e) => {
               setProjectName(e.target.value);
             }}
-            className={clsx("border mt-2 border-black w-full text-sm rounded px-2 py-1", {
-              "border-red-500": showNameError,
-            })}
+            className={clsx(
+              " bg-genesis-gray-200 mt-2 text-genesis-purple-300 border-black w-full text-sm rounded-lg px-1 py-1",
+              {
+                "border-red-500": showNameError,
+              }
+            )}
             name="name"
             type="text"
           />
@@ -179,17 +182,17 @@ function Project() {
               <Listbox.Button
                 as="div"
                 className={
-                  "border mt-2 cursor-pointer text-sm px-1 py-1 rounded flex items-center justify-between border-black"
+                  "text-genesis-purple-300 mt-2 bg-genesis-gray-200 cursor-pointer text-sm px-1 py-1 rounded-lg flex items-center justify-between border-black"
                 }
               >
                 <span className="block">{status.label}</span>
                 <ChevronDownIcon width={20} height={20} />
               </Listbox.Button>
               <Listbox.Options
-                className={"border bg-slate-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
+               className={" outline-none bg-genesis-gray-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
               >
                 {statuses.map((status) => (
-                  <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={status.id} value={status}>
+                  <Listbox.Option className={"cursor-pointer text-genesis-purple-300   text-sm px-1 py-1 "} key={status.id} value={status}>
                     {status.label}
                   </Listbox.Option>
                 ))}
@@ -203,17 +206,17 @@ function Project() {
               <Listbox.Button
                 as="div"
                 className={
-                  "border mt-2 cursor-pointer text-sm px-1 py-1 rounded flex items-center justify-between border-black"
+                  "text-genesis-purple-300 mt-2 bg-genesis-gray-200 cursor-pointer text-sm px-1 py-1 rounded-lg flex items-center justify-between border-black"
                 }
               >
                 <span className="block">{venture.label}</span>
                 <ChevronDownIcon width={20} height={20} />
               </Listbox.Button>
               <Listbox.Options
-                className={"border bg-slate-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
+                 className={" outline-none bg-genesis-gray-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
               >
-                {ventures.map((venture:any) => (
-                  <Listbox.Option className={"cursor-pointer  text-sm px-1 py-1 "} key={venture.id} value={venture}>
+                  {ventures.map((venture: any) => (
+                  <Listbox.Option className={"cursor-pointer text-genesis-purple-300   text-sm px-1 py-1 "} key={venture.id} value={venture}>
                     {venture.label}
                   </Listbox.Option>
                 ))}
@@ -222,22 +225,24 @@ function Project() {
           </div>
 
           <div className="relative">
-            <label className="block text-base font-semibold">Duration</label>
+          <label className="block text-genesis-gray-800 text-base font-semibold">Duration</label>
             <div className="mt-2 flex items-center gap-x-2">
+            <span className="text-sm font-semibold text-genesis-gray-800">H</span>
               <input
                 type="text"
                 name="h"
                 value={duration.h}
                 onChange={handleDurationChange}
-                className=" w-8 border text-center block border-black text-base px-1 py-1 rounded outline-none"
+                className=" w-8  text-genesis-purple-300 text-center block border-black text-base px-1 py-1 rounded-lg bg-genesis-gray-200 outline-none"
               />
               <span className="">:</span>
+              <span className="text-sm font-semibold text-genesis-gray-800">M</span>
               <input
                 type="text"
                 name="m"
                 value={duration.m}
                 onChange={handleDurationChange}
-                className=" w-8 border text-center block border-black text-base px-1 py-1 rounded outline-none"
+                className=" w-8 text-genesis-purple-300  text-center block border-black text-base px-1 py-1 rounded-lg bg-genesis-gray-200 outline-none"
               />
             </div>
             <p className={clsx("text-xs text-red-500", { block: showDurationError, hidden: !showDurationError })}>
@@ -245,20 +250,21 @@ function Project() {
             </p>
           </div>
         </div>
+
         <div className="flex gap-x-4 border-black mt-4">
           <button
             onClick={() => {
               navigate(-1);
             }}
             type="button"
-            className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20"
+            className="border-2 text-genesis-gray-800 block border-genesis-gray-800 rounded-lg px-1 py-2 text-sm font-semibold w-20"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
             type="button"
-            className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20"
+            className=" block border-black bg-genesis-green-300 text-white rounded-lg px-1 py-2 text-sm font-semibold w-20"
           >
             Save
           </button>

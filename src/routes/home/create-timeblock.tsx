@@ -122,7 +122,7 @@ function CreateTimeBlock() {
 
   if (isLoading || isUserLoading) {
     return (
-      <div className="mt-4 border-black">
+      <div className="mt-4 bg-genesis-gray-200 px-4 py-4 rounded-xl border-black">
         <div className="cursor-pointer flex gap-x-4 items-center">
           <ChevronLeftIcon
             width={20}
@@ -303,7 +303,6 @@ function CreateTimeBlock() {
               Both hours and minutes can't be '0'
             </p>
           </div>
-
           </div>
 
           <div className="flex gap-x-4 border-black mt-4">

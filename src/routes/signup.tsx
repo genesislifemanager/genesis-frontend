@@ -21,14 +21,14 @@ function SignUp() {
       return;
     }
     if (formData.password !== formData.confirmPassword) return;
+
     await signUpUser(formData.email, formData.password, formData);
-    
     navigate("/home/timeblocks");
   };
 
   return (
-    <div className="root-layout  border border-black py-16 px-4">
-      <h1 className="text-center font-semibold text-2xl">Create an account</h1>
+    <div className="root-layout border border-black py-16 px-4">
+      <h1 className="text-center  text-2xl">Create an account</h1>
       <div className="mt-4 py-4 grid grid-cols-1 gap-y-4">
       <h1 className="text-base">Name</h1>
         <input
@@ -71,7 +71,7 @@ function SignUp() {
         <div className="flex justify-center items-center">
           <button
             onClick={handleSubmit}
-            className="block rounded-2xl bg-genesis-green-300 text-white border-black w-fit px-16  py-2  font-semibold"
+            className="block rounded-2xl bg-genesis-green-300 text-white border-black w-fit px-16  py-2  "
           >
             Create Account
           </button>

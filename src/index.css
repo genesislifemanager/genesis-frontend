@@ -1,3 +1,31 @@
+@font-face {
+  font-family: "product-sans";
+  src: url("/fonts/product-sans/Product-Sans-Regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "product-sans";
+  src: url("/fonts/product-sans/Product-Sans-Bold.ttf");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "product-sans";
+  src: url("/fonts/product-sans/Product-Sans-Italic.ttf");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "product-sans";
+  src: url("/fonts/product-sans/Product-Sans-Bold-Italic.ttf");
+  font-weight: 700;
+  font-style: italic;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

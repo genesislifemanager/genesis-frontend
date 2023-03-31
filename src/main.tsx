@@ -24,7 +24,7 @@ import VentureEdit from "./routes/organize/edit-venture";
 import VentureProjects from "./routes/organize/venture-projects";
 import SignIn from "./routes/signin";
 import Settings from "./routes/settings/settings";
-
+import Welcome from "./routes/welcome";
 const router = createBrowserRouter([
   {
     element: <Root />,
@@ -109,7 +109,10 @@ const router = createBrowserRouter([
     element: <SignIn />,
   },
 ]);
-
+{
+  path:"/welcome",
+  element: <Welcome />,
+}
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

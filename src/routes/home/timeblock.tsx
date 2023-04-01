@@ -172,8 +172,8 @@ function TimeBlock() {
 
       <form className="px-4 py-4  border-black mt-4 rounded-2xl bg-white">
         <div className="">
-        <label htmlFor="name" className="block text-genesis-gray-800 text-base ">
-            Timeblock Name 
+          <label htmlFor="name" className="block text-genesis-gray-800 text-base ">
+            Timeblock Name
           </label>
           <input
             id="name"
@@ -186,7 +186,7 @@ function TimeBlock() {
               {
                 "border-red-500": showNameError,
               }
-            )} 
+            )}
             name="name"
             type="text"
           />
@@ -197,22 +197,22 @@ function TimeBlock() {
 
         <div className="grid grid-cols-2 gap-4 border-black">
           <div className="relative mt-4">
-          <label className="block text-base text-genesis-gray-800 ">Type</label>
+            <label className="block text-base text-genesis-gray-800 ">Type</label>
             <Listbox value={type} onChange={setType}>
               <Listbox.Button
                 as="div"
-                className={ "text-genesis-purple-300 mt-2 bg-genesis-gray-200 cursor-pointer text-sm px-1 py-1 rounded-lg flex items-center justify-between border-black"
-                 
+                className={
+                  "text-genesis-purple-300 mt-2 bg-genesis-gray-200 cursor-pointer text-sm px-1 py-1 rounded-lg flex items-center justify-between border-black"
                 }
               >
                 <span className="block">{type.label}</span>
                 <ChevronDownIcon width={20} height={20} />
               </Listbox.Button>
               <Listbox.Options
-                 className={"outline-none bg-genesis-gray-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
+                className={"outline-none bg-genesis-gray-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}
               >
                 {types.map((type) => (
-                 <Listbox.Option className={"cursor-pointer text-genesis-purple-300   text-sm px-1 py-1 "} key={type.id} value={type}>
+                  <Listbox.Option className={"cursor-pointer text-genesis-purple-300   text-sm px-1 py-1 "} key={type.id} value={type}>
                     {type.label}
                   </Listbox.Option>
                 ))}
@@ -221,7 +221,7 @@ function TimeBlock() {
           </div>
 
           <div className="relative mt-4">
-          <label className="block text-base text-genesis-gray-800 ">Mode</label>
+            <label className="block text-base text-genesis-gray-800 ">Mode</label>
             <Listbox value={mode} onChange={setMode}>
               <Listbox.Button
                 as="div"
@@ -234,7 +234,7 @@ function TimeBlock() {
               </Listbox.Button>
               <Listbox.Options className={"outline-none bg-genesis-gray-200 absolute z-10 left-0 right-0  mt-1 rounded border-black"}>
                 {modes.map((mode) => (
-                 <Listbox.Option className={"cursor-pointer text-genesis-purple-300   text-sm px-1 py-1 "} key={mode.id} value={mode}>
+                  <Listbox.Option className={"cursor-pointer text-genesis-purple-300   text-sm px-1 py-1 "} key={mode.id} value={mode}>
                     {mode.label}
                   </Listbox.Option>
                 ))}
@@ -243,7 +243,7 @@ function TimeBlock() {
           </div>
 
           <div className="relative">
-          <label className="block text-base text-genesis-gray-800 ">Project</label>
+            <label className="block text-base text-genesis-gray-800 ">Project</label>
             <Listbox value={project} onChange={setProject}>
               <Listbox.Button
                 as="div"
@@ -265,7 +265,8 @@ function TimeBlock() {
           </div>
 
           <div className="relative">
-          <label className="block text-base text-genesis-gray-800 ">Start Time</label>
+            <label className="block text-base text-genesis-gray-800 ">Start Time</label>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <TimePicker
                 ampm={false}
                 value={s}
@@ -278,16 +279,15 @@ function TimeBlock() {
           </div>
 
           <div className="relative">
-          <label className="block text-genesis-gray-800 text-base ">Duration</label>
+            <label className="block text-genesis-gray-800 text-base ">Duration</label>
             <div className="mt-2 flex items-center gap-x-2">
-            <span className="text-sm font-semibold text-genesis-gray-800">H</span>
             <span className="text-sm  text-genesis-gray-800">H</span>
               <input
                 type="text"
                 name="h"
                 value={duration.h}
                 onChange={handleDurationChange}
-                className=" w-8  text-genesis-purple-300 text-center block border-black text-base px-1 py-1 rounded-lg bg-genesis-gray-200 outline-none" 
+                className=" w-8  text-genesis-purple-300 text-center block border-black text-base px-1 py-1 rounded-lg bg-genesis-gray-200 outline-none"
               />
               <span className="">:</span>
               <span className="text-sm  text-genesis-gray-800">M</span>
@@ -296,7 +296,7 @@ function TimeBlock() {
                 name="m"
                 value={duration.m}
                 onChange={handleDurationChange}
-                className=" w-8 text-genesis-purple-300  text-center block border-black text-base px-1 py-1 rounded-lg bg-genesis-gray-200 outline-none" 
+                className=" w-8 text-genesis-purple-300  text-center block border-black text-base px-1 py-1 rounded-lg bg-genesis-gray-200 outline-none"
               />
             </div>
             <p className={clsx("text-xs text-red-500", { block: showDurationError, hidden: !showDurationError })}>
@@ -319,10 +319,11 @@ function TimeBlock() {
             onClick={handleSave}
             type="button"
             className=" block border-black bg-genesis-green-300 text-white rounded-lg px-1 py-2 text-sm  w-20"
+          >
             Save
           </button>
         </div>
-        
+
       </form>
     </div>
   );

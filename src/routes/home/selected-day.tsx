@@ -108,7 +108,7 @@ function SelectedDay() {
 
   return (
     <div className="mt-4  bg-genesis-gray-200 px-4 py-4 rounded-xl border-black">
-    <h1 className="text-2xl  ">{getHeadingForDate(selectedDate)}</h1
+    <h1 className="text-2xl  ">{getHeadingForDate(selectedDate)}</h1>
     <div className="mt-4"> 
         <NavLink to={"/home/timeblocks/create"}>
         <div className=" border-black flex justify-center px-2 py-2 rounded-1.5xl bg-genesis-green-300">

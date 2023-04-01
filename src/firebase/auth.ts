@@ -30,7 +30,7 @@ export const getCurrentUser = async () => {
   return user;
 };
 
-export const signUpUser = async (email: string, password: string, formData: any) => {
+export const signUpUser = async ({email, password, formData}:{email: string; password: string; formData: any}) => {
   try {
     const user = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(auth.currentUser as User, { displayName: `${formData.fname} ${formData.lname}` });
@@ -41,7 +41,7 @@ export const signUpUser = async (email: string, password: string, formData: any)
   }
 };
 
-export const signInUser = async (email: string, password: string) => {
+export const signInUser = async ({email, password}:{email: string; password: string}) => {
   try {
     const user = await signInWithEmailAndPassword(auth, email, password);
     console.log(user);

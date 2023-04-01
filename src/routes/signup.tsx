@@ -1,10 +1,17 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signUpUser } from "../firebase/auth";
+import { useMutation } from "react-query";
 
 function SignUp() {
   const [formData, setFormData] = useState({ fname: "", lname: "", email: "", password: "", confirmPassword: "" });
   const navigate = useNavigate();
+
+  const signUpMutation = useMutation(signUpUser, {
+    onSuccess: () => {
+      navigate("/home/timeblocks");
+    },
+  });
 
   const handleFormDataChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,9 +29,18 @@ function SignUp() {
     }
     if (formData.password !== formData.confirmPassword) return;
 
-    await signUpUser(formData.email, formData.password, formData);
-    navigate("/home/timeblocks");
+   // await signUpUser(formData.email, formData.password, formData);
+    // navigate("/home/timeblocks");
+    signUpMutation.mutate({email:formData.email, password:formData.password, formData:formData})
   };
+
+  if (signUpMutation.isLoading) {
+    return (
+      <div className="root-layout font-sans px-4 py-4  items-center flex justify-center border relative border-black">
+        <h1 className="text-2xl">Loading...</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="root-layout border border-black py-16 px-4">

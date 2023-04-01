@@ -62,7 +62,7 @@ function Venture() {
         />
       </div>
          
-      <div className="mt-4 bg-white  px-1 py-1 rounded-xl flex flex-row items-center w-fit border-black  ">
+      <div className="mt-4 bg-white  px-1.5 py-1.5 rounded-xl flex flex-row items-center w-fit border-black  ">
         <NavLink to={`/organize/ventures/${id}/projects`}>
           {({ isActive }) => {
             return (

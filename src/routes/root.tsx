@@ -21,9 +21,7 @@ function Root() {
 
   const handleClickOpen = async () => { 
     setOpen(true);
-    await signOutUser();
-    navigate(0);
-  };
+    };
 
   const handleClose = () => {
     setOpen(false);

@@ -4,7 +4,7 @@ function Welcome() {
   return (
     <div className="root-layout border border-black py-16 px-4 flex flex-col justify-center items-center">
       <h1 className="text-6xl text-center text-genesis-green-300">Genesis</h1>
-      <h2 className="text-2xl text-center mt-4">Hey Welcome</h2>
+      <h2 className="text-2xl text-center mt-4">Hey, Welcome</h2>
       <h2 className="text-xl text-center mt-4">Start living an organized life using Genesis</h2>
 
       <div className="flex flex-col justify-center items-center mt-8">

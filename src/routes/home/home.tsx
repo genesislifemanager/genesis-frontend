@@ -14,7 +14,7 @@ function Home() {
           {({ isActive }) => {
             return (
               <span
-                className={clsx("block text-center px-1 py-1 font-semibold", {
+                    className={clsx("block text-center px-1 py-1 ", {
                   "border border-black rounded-lg": isActive,
                 })}
               >
@@ -27,7 +27,7 @@ function Home() {
           {({ isActive }) => {
             return (
               <span
-              className={clsx("block text-sm text-center px-1 py-1 font-semibold", {
+              className={clsx("block text-sm text-center px-1 py-1 ", {
                 "bg-genesis-gray-300 rounded-lg": isActive, 
                 })}
               >
@@ -40,7 +40,7 @@ function Home() {
           {({ isActive }) => {
             return (
               <span
-              className={clsx("block text-sm text-center px-1 py-1 font-semibold", {
+              className={clsx("block text-sm text-center px-1 py-1 ", {
                 "bg-genesis-gray-300 rounded-lg": isActive,  
                 })}
               >

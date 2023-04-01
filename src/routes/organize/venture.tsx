@@ -49,7 +49,7 @@ function Venture() {
               navigate("/organize/ventures");
             }}
           />
-          <h1 className="text-xl font-semibold">{ventureName}</h1>
+              <h1 className="text-xl ">{ventureName}</h1>
         </div>
         <TrashIcon
           width={20}

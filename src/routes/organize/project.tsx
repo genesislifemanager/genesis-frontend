@@ -123,7 +123,7 @@ function Project() {
               navigate(-1);
             }}
           />
-          <h1 className="text-xl font-semibold">{data.name}</h1>
+            <h1 className="text-xl ">{data.name}</h1>
         </div>
         <TrashIcon
           width={20}
@@ -138,7 +138,7 @@ function Project() {
 
       <form className="px-4 py-4  border-black mt-4 rounded-2xl bg-white">
         <div>
-        <label htmlFor="name" className="block text-genesis-gray-800 text-base font-semibold">
+        <label htmlFor="name" className="block text-genesis-gray-800 text-base ">
           Project Name
           </label>
           <input
@@ -163,7 +163,7 @@ function Project() {
 
         <div className="grid mt-4 grid-cols-2 gap-4 border-black">
           <div className="relative">
-          <label className="block text-genesis-gray-800 text-base font-semibold">Due</label>
+          <label className="block text-genesis-gray-800 text-base ">Due</label>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
                 ampm={false}
@@ -177,7 +177,7 @@ function Project() {
           </div>
 
           <div className="relative ">
-          <label className="block text-genesis-gray-800 text-base font-semibold">Status</label>
+          <label className="block text-genesis-gray-800 text-base ">Status</label>
             <Listbox value={status} onChange={setStatus}>
               <Listbox.Button
                 as="div"
@@ -201,7 +201,7 @@ function Project() {
           </div>
 
           <div className="relative ">
-          <label className="block text-genesis-gray-800 text-base font-semibold">Venture</label>
+          <label className="block text-genesis-gray-800 text-base ">Venture</label>
             <Listbox value={venture} onChange={setVenture}>
               <Listbox.Button
                 as="div"
@@ -225,9 +225,9 @@ function Project() {
           </div>
 
           <div className="relative">
-          <label className="block text-genesis-gray-800 text-base font-semibold">Duration</label>
+          <label className="block text-genesis-gray-800 text-base ">Duration</label>
             <div className="mt-2 flex items-center gap-x-2">
-            <span className="text-sm font-semibold text-genesis-gray-800">H</span>
+            <span className="text-sm  text-genesis-gray-800">H</span>
               <input
                 type="text"
                 name="h"
@@ -236,7 +236,7 @@ function Project() {
                 className=" w-8  text-genesis-purple-300 text-center block border-black text-base px-1 py-1 rounded-lg bg-genesis-gray-200 outline-none"
               />
               <span className="">:</span>
-              <span className="text-sm font-semibold text-genesis-gray-800">M</span>
+              <span className="text-sm  text-genesis-gray-800">M</span>
               <input
                 type="text"
                 name="m"
@@ -257,14 +257,14 @@ function Project() {
               navigate(-1);
             }}
             type="button"
-            className="border-2 text-genesis-gray-800 block border-genesis-gray-800 rounded-lg px-1 py-2 text-sm font-semibold w-20"
+            className="border-2 text-genesis-gray-800 block border-genesis-gray-800 rounded-lg px-1 py-2 text-sm  w-20"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
             type="button"
-            className=" block border-black bg-genesis-green-300 text-white rounded-lg px-1 py-2 text-sm font-semibold w-20"
+            className=" block border-black bg-genesis-green-300 text-white rounded-lg px-1 py-2 text-sm  w-20"
           >
             Save
           </button>

@@ -29,7 +29,7 @@ function Projects() {
   if (isLoading) {
     return (
       <div className=" bg-genesis-gray-200 px-4 py-4 rounded-xl border-black">
-        <h1 className="text-2xl font-semibold">Projects</h1>
+        <h1 className="text-2xl ">Projects</h1>
         <div className="mt-4">
         <NavLink to={"/organize/projects/create"}>
           <div className="border-black flex justify-center px-2 py-2 rounded-1.5xl bg-genesis-green-300">
@@ -46,7 +46,7 @@ function Projects() {
 
   return (
     <div className=" bg-genesis-gray-200 px-4 py-4 rounded-xl border-black mt-4">
-      <h1 className="text-2xl font-semibold">Projects</h1>
+        <h1 className="text-2xl ">Projects</h1>
       <div className="mt-4">
         <NavLink to={"/organize/projects/create"}>
         <div className="border-black flex justify-center px-2 py-2 rounded-1.5xl bg-genesis-green-300">
@@ -65,7 +65,7 @@ function Projects() {
                   navigate(`/organize/ventures/${venture.id}/projects`);
                 }}
               >
-                <span className="text-xl block font-semibold">{venture.name}</span>
+               <span className="text-xl block ">{venture.name}</span>
                 <ChevronRightIcon width={16} height={16} />
               </div>
               <div className=" border-black px-4 py-4 bg-white rounded-xl mt-4 grid grid-cols-1 gap-y-2">

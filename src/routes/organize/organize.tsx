@@ -9,7 +9,7 @@ function Organize() {
           {({ isActive }) => {
             return (
               <span
-              className={clsx("block text-sm text-center px-1 py-1 font-semibold", {
+              className={clsx("block text-sm text-center px-1 py-1 ", {
                 "bg-genesis-gray-300 rounded-lg": isActive, 
                 })}
               >
@@ -22,8 +22,7 @@ function Organize() {
           {({ isActive }) => {
             return (
               <span
-              className={clsx("block text-sm text-center px-1 py-1 font-semibold", {
-                "bg-genesis-gray-300 rounded-lg": isActive,  
+              className={clsx("block text-sm text-center px-1 py-1 ", {
                 })}
               >
                 Ventures

@@ -17,7 +17,7 @@ function Ventures() {
   if (isUserLoading || isLoading) {
     return (
       <div className=" mt-4 bg-genesis-gray-200 px-4 py-4 rounded-xl border-black">
-      <h1 className="text-2xl font-semibold">Ventures</h1>
+          <h1 className="text-2xl ">Ventures</h1>
         <div className="mt-4">
           <NavLink to={"/organize/ventures/create"}>
           <div className="border-black flex justify-center px-2 py-2 rounded-1.5xl bg-genesis-green-300">
@@ -34,7 +34,7 @@ function Ventures() {
 
   return (
     <div className=" mt-4 bg-genesis-gray-200 px-4 py-4 rounded-xl border-black">
-      <h1 className="text-2xl font-semibold">Ventures</h1>
+       <h1 className="text-2xl ">Ventures</h1>
       <div className="mt-4">
         <NavLink to={"/organize/ventures/create"}>
         <div className="border-black flex justify-center px-2 py-2 rounded-1.5xl bg-genesis-green-300">

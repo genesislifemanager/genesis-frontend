@@ -49,7 +49,7 @@ function VentureEdit() {
     <div className="mt-4">
        <form className="px-4 py-4  border-black mt-4 rounded-2xl bg-white">
         <div>
-        <label htmlFor="name" className="block text-genesis-gray-800 text-base font-semibold">
+        <label htmlFor="name" className="block text-genesis-gray-800 text-base ">
           </label>
           <input
             id="name"
@@ -79,14 +79,14 @@ function VentureEdit() {
             navigate(-1);
           }}
           type="button"
-          className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20"
+          className="border block border-black rounded px-1 py-1 text-sm  w-20"
         >
           Cancel
         </button>
         <button
           onClick={handleSave}
           type="button"
-          className="border block border-black rounded px-1 py-1 text-sm font-semibold w-20"
+          className="border block border-black rounded px-1 py-1 text-sm  w-20"
         >
           Save
         </button>

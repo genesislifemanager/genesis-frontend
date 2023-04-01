@@ -52,12 +52,12 @@ return (
             navigate(-1);
           }}
         />
-        <h1 className="text-xl font-semibold">Create Venture</h1>
+        <h1 className="text-xl ">Create Venture</h1>
       </div>
       
       <form className="px-4 py-4  border-black mt-4 rounded-2xl bg-white">
         <div>
-        <label htmlFor="name" className="block text-genesis-gray-800 text-base font-semibold">
+        <label htmlFor="name" className="block text-genesis-gray-800 text-base ">
             Venture Name
           </label>
           <input
@@ -86,14 +86,14 @@ return (
               navigate(-1);
             }}
             type="button"
-            className="border-2 text-genesis-gray-800 block border-genesis-gray-800 rounded-lg px-1 py-2 text-sm font-semibold w-20" 
+            className="border-2 text-genesis-gray-800 block border-genesis-gray-800 rounded-lg px-1 py-2 text-sm  w-20"
           >
             Cancel
           </button>
           <button
             onClick={handleConfirm}
             type="button"
-            className=" block border-black bg-genesis-green-300 text-white rounded-lg px-1 py-2 text-sm font-semibold w-20"
+            className=" block border-black bg-genesis-green-300 text-white rounded-lg px-1 py-2 text-sm  w-20"
           >
             Confirm
           </button>

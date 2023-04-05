@@ -21,13 +21,12 @@ function Root() {
     },
   });
 
-  const handleClickOpen = async () => {
+  const handlePromptOpen = async () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handlePromptClose = () => {
     setOpen(false);
-
   };
 
   if (isLoading) {
@@ -36,6 +35,7 @@ function Root() {
         <h1 className="text-2xl">Loading...</h1>
       </div>
     );
+
   }
 
   return (
@@ -54,13 +54,13 @@ function Root() {
         </NavLink>
       </div>
       <div
-        onClick={handleClickOpen}
+       onClick={handlePromptOpen}
         className="absolute w-12 h-12  bg-genesis-gray-600 border-black cursor-pointer rounded-xl bottom-20 flex items-center justify-center right-4"  
       >
        <ChatBubbleOvalLeftEllipsisIcon width={24} height={24} className="text-genesis-green-300" />
       </div>
 
-      <PromptDialog  user={user} open={open} handleClose={handleClose} />
+      <PromptDialog  user={user} open={open} handlePromptClose={handlePromptClose} />
     </div>
   );
 }

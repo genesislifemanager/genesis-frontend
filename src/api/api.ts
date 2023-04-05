@@ -179,9 +179,9 @@ export const getVentureById = async (uid: string, id: string | undefined) => {
 
 export const createVenture = async (venture: any) => {
   try {
-    
-
     const res = await api.post(`/ventures/${venture.uid}`, venture);
+    console.log(venture);
+    
     return res.data.newVenture;
   } catch (error) {
     throw new Error("Unable to connect to the server");

@@ -106,7 +106,7 @@ function PromptDialog({ user, open, handlePromptClose }: { user: any; open: bool
         onClose={() => {
           setIsPreviewOpen(false);
         }}
-      ></Dialog>
+      >
         <DialogTitle>Completed</DialogTitle>
         <DialogContent>
           <DialogContentText>Review the following data.</DialogContentText>

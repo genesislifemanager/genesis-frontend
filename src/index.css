@@ -69,3 +69,10 @@
 .root-layout{
   min-height: 100svh !important;
 }
+
+.css-hlj6pa-MuiDialogActions-root{
+  display: flex !important;
+  justify-content: flex-start !important;
+  padding-left: 16px !important;
+
+}

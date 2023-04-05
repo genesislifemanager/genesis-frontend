@@ -29,9 +29,7 @@ function SignUp() {
     }
     if (formData.password !== formData.confirmPassword) return;
 
-   // await signUpUser(formData.email, formData.password, formData);
-    // navigate("/home/timeblocks");
-    signUpMutation.mutate({email:formData.email, password:formData.password, formData:formData})
+   signUpMutation.mutate({email:formData.email, password:formData.password, formData:formData})
   };
 
   if (signUpMutation.isLoading) {

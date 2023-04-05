@@ -5,6 +5,10 @@ const api = axios.create({
   baseURL: "https://genesis-backend-prod.up.railway.app/api",
 });
 
+const nlp = axios.create({
+  baseURL: "https://genesis-nlp-prod.up.railway.app",
+});
+
 export const createUser = async (user: { uid: string }) => {
   try {
     const createdUser = await api.post("/users", user);
@@ -203,3 +207,12 @@ export const deleteVentureById = async ({ uid, id }: { uid: string; id: string |
     throw new Error("Unable to connect to the server");
   }
 };
+
+export const createNLPQuery = async (query:{uid:string; query:string}) =>{
+  try {
+    const res = await nlp.post('/query', query);
+    return res.data.data;
+  } catch (error) {
+
+  }
+}

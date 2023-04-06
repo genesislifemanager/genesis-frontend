@@ -23,6 +23,7 @@ function Organize() {
             return (
               <span
               className={clsx("block text-sm text-center px-1 py-1 ", {
+                "bg-genesis-gray-300 rounded-lg": isActive, 
                 })}
               >
                 Ventures

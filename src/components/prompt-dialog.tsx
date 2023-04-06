@@ -17,6 +17,8 @@ function PromptDialog({ user, open, handlePromptClose }: { user: any; open: bool
   const [prompt, setPrompt] = useState("");
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
+  const [error, setError] = useState<string>("");
+
   const queryClient = useQueryClient();
 
   const { mutate, data, isLoading } = useMutation(createNLPQuery, {
@@ -41,10 +43,31 @@ function PromptDialog({ user, open, handlePromptClose }: { user: any; open: bool
   });
 
   const handleSubmit = () => {
+
+    function hasAtSymbolSubstring(str:string) {
+      const regex = /@\w+(?:\s+\w+)*@/; // regular expression to match the pattern @example string@
+      return regex.test(str); // test if the string matches the pattern
+    }
+
+    if(prompt == "") {
+      setError("Text prompt cannot be empty");
+      return
+    }
+
+    if (!hasAtSymbolSubstring(prompt)) {
+      setError("Please wrap the name of the input with @");
+      return
+    }
+
     mutate({ uid: user!.uid, query: prompt });  
   };
 
   const handlePromptChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value !== "") {
+      setError("")
+    }
+
+
     setPrompt(event.target.value);
   };
 
@@ -92,7 +115,9 @@ function PromptDialog({ user, open, handlePromptClose }: { user: any; open: bool
       <Dialog open={open} onClose={handlePromptClose}>
         <DialogTitle>Enter the text prompt</DialogTitle>
         <DialogContent>
+          <p className="text-xs text-red-500">{error?error:""}</p>
           <DialogContentText>Just tell Genesis what you want to do...</DialogContentText>
+          <h1>{"(Please include @ symbols around the name of the resource)"}</h1>
           <TextField fullWidth value={prompt} onChange={handlePromptChange} />
         </DialogContent>
         <DialogActions>
@@ -119,14 +144,14 @@ function PromptDialog({ user, open, handlePromptClose }: { user: any; open: bool
             </div>
 
             <div className="grid grid-cols-2 mt-2 gap-x-4">
-            <div className={clsx("w-full",{"hidden":data.type !== "Task" || data.type !== "Event" || data.type !== "Routine"})}>
+            <div className={clsx("w-full",{"hidden":!(data.type == "Task" || data.type == "Event" || data.type == "Routine")})}>
                 <h1 className="text-sm text-genesis-gray-800">Type</h1>
                 <p className="bg-genesis-gray-200 mt-2 outline-none  text-genesis-purple-300 border-black w-full text-sm rounded-lg px-1 py-1 ">
                 {data.type}
                 </p>
               </div>
 
-              <div className={clsx("w-full",{"hidden":data.type !== "Task" || data.type !== "Event" || data.type !== "Routine"})}>
+              <div className={clsx("w-full",{"hidden":!(data.type == "Task" || data.type == "Event" || data.type == "Routine")})}>
                 <h1 className="text-sm text-genesis-gray-800">Mode</h1>
                 <p className="bg-genesis-gray-200 mt-2 outline-none  text-genesis-purple-300 border-black w-full text-sm rounded-lg px-1 py-1 ">
                   {"Static"}
@@ -151,7 +176,7 @@ function PromptDialog({ user, open, handlePromptClose }: { user: any; open: bool
             </div>
 
             <div className="grid grid-cols-2 mt-2 gap-x-4">
-            <div className={clsx("w-full",{"hidden":!(data.type == "Task" || data.type == "Event" || data.type == "Routine")})}>
+            <div className={clsx("w-full",{"hidden":!(data.type == "Task" || data.type == "Event" || data.type == "Routine" || data.type == "Project")})}>
                 <h1 className="text-sm text-genesis-gray-800">Duration</h1>
                 <div className="mt-2 flex items-center gap-x-2">
                   <span className="text-sm  text-genesis-gray-800">H</span>

@@ -79,14 +79,14 @@ function VentureEdit() {
             navigate(-1);
           }}
           type="button"
-          className="border block border-black rounded px-1 py-1 text-sm  w-20"
+          className="border-2 text-genesis-gray-800 block border-genesis-gray-800 rounded-lg px-1 py-2 text-sm  w-20"
         >
           Cancel
         </button>
         <button
           onClick={handleSave}
           type="button"
-          className="border block border-black rounded px-1 py-1 text-sm  w-20"
+          className=" block border-black bg-genesis-green-300 text-white rounded-lg px-1 py-2 text-sm  w-20"
         >
           Save
         </button>

@@ -80,24 +80,23 @@ const router = createBrowserRouter([
           {
             path: "organize/ventures/:id",
             element: <Venture />,
-            children:[
+            children: [
               {
-                path:"edit",
-                element:<VentureEdit/>
+                path: "edit",
+                element: <VentureEdit />,
               },
               {
-                path:"projects",
-                element:<VentureProjects />
-              }
-            ]
+                path: "projects",
+                element: <VentureProjects />,
+              },
+            ],
           },
-          
         ],
       },
       {
-        path:"settings",
-        element: <Settings />,         
-      }
+        path: "settings",
+        element: <Settings />,
+      },
     ],
   },
   {
@@ -109,12 +108,11 @@ const router = createBrowserRouter([
     element: <SignIn />,
   },
 
-{
-  path:"/welcome",
-  element: <Welcome />,
-}
+  {
+    path: "/welcome",
+    element: <Welcome />,
+  },
 ]);
-
 
 const queryClient = new QueryClient();
 

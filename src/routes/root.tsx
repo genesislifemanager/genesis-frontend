@@ -10,9 +10,9 @@ import { createNLPQuery } from "../api/api";
 
 function Root() {
   const [open, setOpen] = useState(false);
- 
+
   const navigate = useNavigate();
-  
+
   const { isLoading, data: user } = useQuery("user", getCurrentUser, {
     onSuccess(user) {
       if (!user) {
@@ -35,14 +35,13 @@ function Root() {
         <h1 className="text-2xl">Loading...</h1>
       </div>
     );
-
   }
 
   return (
-    <div className="root-layout font-sans px-4 py-4 border relative border-black">
+    <div className="root-layout font-sans lg:mx-[30%] lg:px-2  rounded-xl px-4 py-4 lg:pt-2 lg:border-2 relative border-gray-500/40">
       <Header />
       <Outlet />
-      <div className="flex bg-genesis-gray-300 justify-center rounded-lg left-4 gap-x-16 right-4 bottom-4 absolute py-2 px-4  border-black">
+      <div className="flex bg-genesis-gray-300 justify-center rounded-lg left-4 right-4 lg:bottom-2 lg:left-2 lg:right-2  gap-x-16  bottom-4 absolute py-2 px-4  border-black">
         <NavLink to={"/organize/projects"}>
           <Bars3Icon width={24} height={24} />
         </NavLink>
@@ -53,14 +52,14 @@ function Root() {
           <Cog6ToothIcon width={24} height={24} />
         </NavLink>
       </div>
-      <div
-       onClick={handlePromptOpen}
-        className="absolute w-12 h-12  bg-genesis-gray-600 border-black cursor-pointer rounded-xl bottom-20 flex items-center justify-center right-4"  
+      {/* <div
+        onClick={handlePromptOpen}
+        className="absolute w-12 h-12  bg-genesis-gray-600 border-black cursor-pointer rounded-xl bottom-20 flex items-center justify-center right-4"
       >
-       <ChatBubbleOvalLeftEllipsisIcon width={24} height={24} className="text-genesis-green-300" />
-      </div>
+        <ChatBubbleOvalLeftEllipsisIcon width={24} height={24} className="text-genesis-green-300" />
+      </div> */}
 
-      <PromptDialog  user={user} open={open} handlePromptClose={handlePromptClose} />
+      <PromptDialog user={user} open={open} handlePromptClose={handlePromptClose} />
     </div>
   );
 }

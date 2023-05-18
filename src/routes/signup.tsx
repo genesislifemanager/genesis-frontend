@@ -34,14 +34,14 @@ function SignUp() {
 
   if (signUpMutation.isLoading) {
     return (
-      <div className="root-layout font-sans px-4 py-4  items-center flex justify-center border relative border-black">
+      <div className="root-layout lg:px-[30%] font-sans px-4 py-4  items-center flex justify-center border relative border-black">
         <h1 className="text-2xl">Loading...</h1>
       </div>
     );
   }
 
   return (
-    <div className="root-layout border border-black py-16 px-4">
+    <div className="root-layout lg:px-[30%] border border-black py-16 px-4">
       <h1 className="text-center  text-2xl">Create an account</h1>
       <div className="mt-4 py-4 grid grid-cols-1 gap-y-4">
       <h1 className="text-base">Name</h1>
